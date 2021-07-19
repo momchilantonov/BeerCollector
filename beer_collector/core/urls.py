@@ -1,6 +1,6 @@
 from django.urls import path
-from beer_collector.core.views import home_page
+from beer_collector.core.views import index
 
 urlpatterns = [
-    path('', home_page, name='home page')
+    path('', index, name='home page')
 ]

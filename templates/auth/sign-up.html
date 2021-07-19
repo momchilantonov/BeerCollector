@@ -4,7 +4,7 @@
     <form action="{% url 'sign up' %}" method="post">
         {% csrf_token %}
         <div class="card border-primary mb-3">
-            <div class="card-header">Fill all the fields to Sign Up</div>
+            <div class="card-header">Please fill all the fields to Sign Up</div>
             <div class="card-body">
                 {{ form.errors }}
                 <p class="card-text">{{ form.email.label }}</p>
