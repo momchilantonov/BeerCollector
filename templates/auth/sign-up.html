@@ -6,10 +6,11 @@
         <div class="card border-primary mb-3">
             <div class="card-header">Fill all the fields to Sign Up</div>
             <div class="card-body">
+                {{ form.errors }}
                 <p class="card-text">{{ form.email.label }}</p>
                 {{ form.email }}
-                <p class="card-text">{{ form.user_name.label }}</p>
-                {{ form.user_name }}
+                <p class="card-text">{{ form.username.label }}</p>
+                {{ form.username }}
                 <p class="card-text">{{ form.first_name.label }}</p>
                 {{ form.first_name }}
                 <p class="card-text">{{ form.last_name.label }}</p>

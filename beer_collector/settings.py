@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     # My apps
     'beer_collector.core',
     'beer_collector.account',
+    'beer_collector.collector_profile',
 ]
 
 MIDDLEWARE = [
