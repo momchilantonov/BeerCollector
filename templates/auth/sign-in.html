@@ -1,0 +1,9 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <form action="{% url 'sign in' %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <button>Sign in</button>
+    </form>
+{% endblock %}

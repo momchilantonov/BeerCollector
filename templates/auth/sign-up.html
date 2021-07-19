@@ -1,0 +1,26 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <form action="{% url 'sign up' %}" method="post">
+        {% csrf_token %}
+        <div class="card border-primary mb-3">
+            <div class="card-header">Fill all the fields to Sign Up</div>
+            <div class="card-body">
+                <p class="card-text">{{ form.email.label }}</p>
+                {{ form.email }}
+                <p class="card-text">{{ form.user_name.label }}</p>
+                {{ form.user_name }}
+                <p class="card-text">{{ form.first_name.label }}</p>
+                {{ form.first_name }}
+                <p class="card-text">{{ form.last_name.label }}</p>
+                {{ form.last_name }}
+                <p class="card-text">{{ form.password1.label }}</p>
+                {{ form.password1 }}
+                <p class="card-text">{{ form.password2.label }}</p>
+                {{ form.password2 }}
+                <hr>
+                <button type="submit" class="btn btn-outline-primary">Sign Up</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
