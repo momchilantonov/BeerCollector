@@ -5,14 +5,37 @@ from beer_collector.collector_profile.models import CollectorProfile
 class CollectorProfileForm(forms.ModelForm):
     class Meta:
         model = CollectorProfile
-        exclude = ('user', 'is_complete')
+        exclude = ('is_complete', 'user',)
         widgets = {
-            'image': forms.FileInput(),
+            'username': forms.TextInput(
+                attrs={
+                    'placeholder': 'Enter username',
+                    'style': 'width: 400px',
+                }
+            ),
+            'first_name': forms.TextInput(
+                attrs={
+                    'placeholder': 'Enter first name',
+                    'style': 'width: 400px',
+                }
+            ),
+            'last_name': forms.TextInput(
+                attrs={
+                    'placeholder': 'Enter last name',
+                    'style': 'width: 400px',
+                }
+            ),
             'about': forms.Textarea(
                 attrs={
                     'placeholder': 'Write something about yourself',
-                    'rows': 4,
-                    'style': 'resize:none',
+                    'rows': 6,
+                    'cols': 54,
+                    'style': 'resize: none',
                 }
-            )
+            ),
+            'image': forms.FileInput(
+                attrs={
+                    'style': 'width: 143; height: 200'
+                }
+            ),
         }

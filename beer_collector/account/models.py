@@ -4,36 +4,21 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 
 
 class CustomAccountManager(BaseUserManager):
-    def create_user(self, email, username, first_name, last_name, password=None):
+    def create_user(self, email, password=None):
         if not email:
             raise ValueError('You must provide an email.')
 
-        if not username:
-            raise ValueError('You must provide username.')
-
-        if not first_name:
-            raise ValueError('You must provide first name.')
-
-        if not last_name:
-            raise ValueError('You must provide last name.')
-
         user = self.model(
             email=self.normalize_email(email),
-            username=username,
-            first_name=first_name,
-            last_name=last_name,
         )
         user.set_password(password)
         user.save(using=self._db)
 
         return user
 
-    def create_superuser(self, email, username, first_name, last_name, password=None):
+    def create_superuser(self, email, password=None):
         user = self.create_user(
             email=self.normalize_email(email),
-            username=username,
-            first_name=first_name,
-            last_name=last_name,
             password=password,
         )
         user.is_staff = True
@@ -49,23 +34,8 @@ class Account(AbstractBaseUser, PermissionsMixin):
         max_length=60,
         unique=True,
     )
-    username = models.CharField(
-        _('username'),
-        max_length=20,
-        unique=True,
-    )
-    first_name = models.CharField(
-        _('first name'),
-        max_length=20,
-        blank=True,
-    )
-    last_name = models.CharField(
-        _('last name'),
-        max_length=20,
-        blank=True,
-    )
-    registration_date = models.DateTimeField(
-        _('registration date'),
+    date_joined = models.DateTimeField(
+        _('date joined'),
         auto_now_add=True,
     )
     last_login = models.DateTimeField(
@@ -86,9 +56,9 @@ class Account(AbstractBaseUser, PermissionsMixin):
     )
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
+    REQUIRED_FIELDS = []
 
     objects = CustomAccountManager()
 
     def __str__(self):
-        return self.username
+        return self.email

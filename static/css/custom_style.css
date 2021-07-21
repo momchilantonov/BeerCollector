@@ -41,3 +41,25 @@ body {
     margin-left: auto;
     margin-right: auto;
 }
+.alert-light {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    width: 400px;
+    height: 80px;
+    color: black;
+    border: solid black 2px;
+}
+.img-thumbnail {
+    margin-bottom: 20px;
+    width: 143px;
+    height: 150px;
+}
+.container-sm {
+    width: 505px;
+}
+.form-control:read-only{
+    background-color: transparent;
+    resize: none;
+}

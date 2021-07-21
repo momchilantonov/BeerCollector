@@ -1,4 +1,5 @@
 from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from beer_collector.account.forms import SignUpForm, SignInForm
 
@@ -39,3 +40,8 @@ def sign_in(req):
 def sign_out(req):
     logout(req)
     return redirect('home page')
+
+
+@login_required
+def delete_account(req):
+    pass

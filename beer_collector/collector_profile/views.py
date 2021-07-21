@@ -6,19 +6,34 @@ from beer_collector.collector_profile.models import CollectorProfile
 
 @login_required
 def profile_details(req):
+    user_id = req.user.id
+    profile = CollectorProfile.objects.get(pk=user_id)
+    context = {
+        'profile': profile,
+    }
+
+    return render(req, 'profiles/profile-details.html', context)
+
+
+@login_required
+def profile_edit(req):
     profile = CollectorProfile.objects.get(pk=req.user.id)
-    user = req.user.id
     if req.POST:
-        form = CollectorProfileForm(req.POST, instance=profile)
+        form = CollectorProfileForm(
+            req.POST,
+            req.FILES,
+            instance=profile,
+        )
         if form.is_valid():
             form.save()
-            return redirect('home page')
+            return redirect('profile details')
     else:
-        form = CollectorProfileForm(instance=profile)
+        form = CollectorProfileForm(
+            instance=profile,
+        )
 
     context = {
         'form': form,
-        'user': user,
     }
 
-    return render(req, 'profiles/details.html', context)
+    return render(req, 'profiles/profile-edit.html', context)

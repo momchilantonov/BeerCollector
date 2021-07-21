@@ -34,32 +34,11 @@ class SignUpForm(UserCreationForm):
         model = UserModel
         fields = (
             'email',
-            'username',
-            'first_name',
-            'last_name',
         )
         widgets = {
             'email': forms.EmailInput(
                 attrs={
                     'placeholder': 'Enter your email address',
-                    'style': 'width: 400px',
-                }
-            ),
-            'username': forms.TextInput(
-                attrs={
-                    'placeholder': 'Enter your username',
-                    'style': 'width: 400px',
-                }
-            ),
-            'first_name': forms.TextInput(
-                attrs={
-                    'placeholder': 'Enter your first name',
-                    'style': 'width: 400px',
-                }
-            ),
-            'last_name': forms.TextInput(
-                attrs={
-                    'placeholder': 'Enter your last name',
                     'style': 'width: 400px',
                 }
             ),

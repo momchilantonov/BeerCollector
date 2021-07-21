@@ -1,0 +1,55 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load profile_templatetags %}
+
+{% block content %}
+    <div class="text-center">
+        {% if not profile.is_complete %}
+            {% profile_complete_notification %}
+        {% endif %}
+        <br>
+        {% if not profile.username %}
+            <h2>Hello, collector</h2>
+        {% else %}
+            <h2>Hello, {{ profile.username }}</h2>
+        {% endif %}
+        {% if not profile.image %}
+            <img class="img-thumbnail" src="{% static 'images/anonymous_profile_img.jpg' %}" alt="anonymous img">
+        {% else %}
+            <img class="img-thumbnail" src="{{ profile.image.url }}" alt="profile img">
+        {% endif %}
+        <br>
+        <div class="container-sm">
+            {% if not profile.first_name %}
+                <h5>First name:</h5>
+                <h5>The first name is not specified</h5>
+            {% else %}
+                <h5>First name:</h5>
+                <h5>{{ profile.first_name }}</h5>
+            {% endif %}
+            <br>
+            {% if not profile.last_name %}
+                <h5>last name:</h5>
+                <h5>The last name is not specified</h5>
+            {% else %}
+                <h5>last name:</h5>
+                <h5>{{ profile.last_name }}</h5>
+            {% endif %}
+            <br>
+            {% if not profile.about %}
+                <h5>About:</h5>
+                <label>
+                    <textarea class="textarea form-control" rows="4" cols="75"
+                              readonly>The information is not specified.</textarea>
+                </label>
+            {% else %}
+                <h5>About:</h5>
+                <label>
+                    <textarea class="textarea form-control" rows="4" cols="75" readonly>{{ profile.about }}</textarea>
+                </label>
+            {% endif %}
+            <hr>
+            <a class="btn btn-primary" href="{% url 'profile edit' %}">Edit</a>
+        </div>
+    </div>
+{% endblock %}

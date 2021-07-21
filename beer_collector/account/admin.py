@@ -9,10 +9,7 @@ UserModel = get_user_model()
 class AccountAdmin(UserAdmin):
     list_display = (
         'email',
-        'username',
-        'first_name',
-        'last_name',
-        'registration_date',
+        'date_joined',
         'last_login',
         'is_active',
         'is_staff',
@@ -20,21 +17,17 @@ class AccountAdmin(UserAdmin):
     )
     search_fields = (
         'email',
-        'username',
     )
     readonly_fields = (
-        'registration_date',
+        'date_joined',
         'last_login',
     )
     ordering = (
-        'registration_date',
+        'date_joined',
     )
     list_filter = (
         'email',
-        'username',
-        'first_name',
-        'last_name',
-        'registration_date',
+        'date_joined',
         'last_login',
         'is_active',
         'is_staff',
@@ -44,14 +37,11 @@ class AccountAdmin(UserAdmin):
         ('User credentials', {
             'fields': (
                 'email',
-                'username',
-                'first_name',
-                'last_name',
                 'password',
             )}),
         ('Registration and Login information', {
             'fields': (
-                'registration_date',
+                'date_joined',
                 'last_login',
             )}),
         ('User permissions', {
@@ -70,9 +60,6 @@ class AccountAdmin(UserAdmin):
             ),
             'fields': (
                 'email',
-                'username',
-                'first_name',
-                'last_name',
                 'password1',
                 'password2'
             ),

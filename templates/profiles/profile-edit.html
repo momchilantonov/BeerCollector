@@ -1,0 +1,25 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <form action="{% url 'profile edit' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="card border-primary mb-3">
+            <div class="card-header">Please fill all the fields to complete your profile</div>
+            <div class="card-body">
+                {{ form.errors }}
+                <p class="card-text">{{ form.username.label }}</p>
+                {{ form.username }}
+                <p class="card-text">{{ form.first_name.label }}</p>
+                {{ form.first_name }}
+                <p class="card-text">{{ form.last_name.label }}</p>
+                {{ form.last_name }}
+                <p class="card-text">{{ form.about.label }}</p>
+                {{ form.about }}
+                <p class="card-text">{{ form.image.label }}</p>
+                {{ form.image }}
+                <hr>
+                <button type="submit" class="btn btn-outline-primary">Edit</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
