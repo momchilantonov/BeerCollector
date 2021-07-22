@@ -1,5 +1,6 @@
 {% extends 'core/base.html' %}
 
+{% block title %}Edit Profile{% endblock %}
 {% block content %}
     <form action="{% url 'profile edit' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -18,7 +19,10 @@
                 <p class="card-text">{{ form.image.label }}</p>
                 {{ form.image }}
                 <hr>
-                <button type="submit" class="btn btn-outline-primary">Edit</button>
+                <div class="buttons">
+                    <button type="submit" class="btn btn-outline-success">Update</button>
+                    <a class="btn btn-outline-danger" href="{% url 'delete account' %}">Delete</a>
+                </div>
             </div>
         </div>
     </form>

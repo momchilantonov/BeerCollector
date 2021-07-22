@@ -61,7 +61,7 @@ class AccountAdmin(UserAdmin):
             'fields': (
                 'email',
                 'password1',
-                'password2'
+                'password2',
             ),
         }),
     )

@@ -8,8 +8,9 @@ def sign_up(req):
     if req.POST:
         form = SignUpForm(req.POST)
         if form.is_valid():
-            form.save()
-            return redirect('sign in')
+            user = form.save()
+            login(req, user)
+            return redirect('home page')
     else:
         form = SignUpForm()
 
@@ -44,4 +45,8 @@ def sign_out(req):
 
 @login_required
 def delete_account(req):
-    pass
+    user = req.user
+    if req.POST:
+        user.delete()
+        return redirect('home page')
+    return render(req, 'auth/delete-account.html')

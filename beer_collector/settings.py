@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'beer_collector.core',
     'beer_collector.account',
     'beer_collector.collector_profile',
+    'beer_collector.beer',
 ]
 
 MIDDLEWARE = [

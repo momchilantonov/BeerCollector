@@ -17,7 +17,8 @@ def profile_details(req):
 
 @login_required
 def profile_edit(req):
-    profile = CollectorProfile.objects.get(pk=req.user.id)
+    user_id = req.user.id
+    profile = CollectorProfile.objects.get(pk=user_id)
     if req.POST:
         form = CollectorProfileForm(
             req.POST,

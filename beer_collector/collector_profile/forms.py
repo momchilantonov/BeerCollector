@@ -35,7 +35,7 @@ class CollectorProfileForm(forms.ModelForm):
             ),
             'image': forms.FileInput(
                 attrs={
-                    'style': 'width: 143; height: 200'
+                    'style': 'width: 145; height: 200'
                 }
             ),
         }

@@ -29,6 +29,9 @@ from django.shortcuts import render, redirect
 #         return redirect(red)
 #     return show_form(req, temp, form)
 
+def get_obj_by_pk(obj, pk):
+    return obj.objects.get(pk=pk)
+
 
 def index(req):
     return render(req, 'core/home-page.html')

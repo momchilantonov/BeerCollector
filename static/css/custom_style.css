@@ -6,7 +6,7 @@ body {
 }
 .home_h1 {
     text-align: center;
-    font-size: 80px;
+    font-size: 60px;
     margin-top: 20px;
 }
 .home_img {
@@ -62,4 +62,12 @@ body {
 .form-control:read-only{
     background-color: transparent;
     resize: none;
+}
+.btn{
+    display: inline-block;
+    width: 100px;
+    height: 38px;
+}
+.buttons {
+    text-align: center;
 }

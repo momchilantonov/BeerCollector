@@ -1,5 +1,6 @@
 {% extends 'core/base.html' %}
 
+{% block title %}Sign In{% endblock %}
 {% block content %}
     <form action="{% url 'sign in' %}" method="post">
         {% csrf_token %}
@@ -12,7 +13,9 @@
                 <p class="card-text">{{ form.password.label }}</p>
                 {{ form.password }}
                 <hr>
-                <button type="submit" class="btn btn-outline-primary">Sign In</button>
+                <div class="buttons">
+                    <button type="submit" class="btn btn-outline-primary">Sign In</button>
+                </div>
             </div>
         </div>
     </form>
