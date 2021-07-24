@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import authenticate, get_user_model, password_validation
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.core.exceptions import ValidationError
 
 UserModel = get_user_model()
@@ -45,15 +45,14 @@ class SignUpForm(UserCreationForm):
         }
 
 
-class SignInForm(forms.Form):
-    user = None
+class SignInForm(AuthenticationForm):
     email = forms.EmailField(
         widget=forms.EmailInput(
             attrs={
                 'placeholder': 'Enter your email address',
                 'style': 'width: 400px',
             }
-        )
+        ),
     )
     password = forms.CharField(
         widget=forms.PasswordInput(
@@ -64,14 +63,28 @@ class SignInForm(forms.Form):
         ),
     )
 
-    def clean_password(self):
-        self.user = authenticate(
-            email=self.cleaned_data['email'],
-            password=self.cleaned_data['password'],
-        )
+    def clean(self):
+        email = self.cleaned_data.get('email')
+        password = self.cleaned_data.get('password')
 
-        if not self.user:
-            raise ValidationError('Email and/or password incorrect')
+        if email and password:
+            user = authenticate(username=email, password=password)
+            if not user:
+                raise ValidationError('Incorrect email!')
+            if not user.check_password(password):
+                raise ValidationError('Incorrect password!')
+            if not user.is_active:
+                raise ValidationError('This user is not active!')
+        return super(SignInForm, self).clean()
 
-    def save(self):
-        return self.user
+    # def clean_password(self):
+    #     self.user = authenticate(
+    #         email=self.cleaned_data['email'],
+    #         password=self.cleaned_data['password'],
+    #     )
+    #
+    #     if not self.user:
+    #         raise ValidationError('Email and/or password incorrect')
+    #
+    # def save(self):
+    #     return self.user

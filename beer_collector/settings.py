@@ -130,6 +130,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_URL = reverse_lazy('sign in')
 
+LOGIN_REDIRECT_URL = reverse_lazy('home page')
+
 # Custom user model settings
 
 AUTH_USER_MODEL = 'account.Account'
