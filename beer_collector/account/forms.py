@@ -7,6 +7,9 @@ UserModel = get_user_model()
 
 
 class SignUpForm(UserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super(SignUpForm, self).__init__(*args, **kwargs)
+
     password1 = forms.CharField(
         label="Password",
         strip=False,
@@ -46,10 +49,13 @@ class SignUpForm(UserCreationForm):
 
 
 class SignInForm(AuthenticationForm):
-    email = forms.EmailField(
+    def __init__(self, *args, **kwargs):
+        super(SignInForm, self).__init__(*args, **kwargs)
+
+    username = forms.EmailField(
         widget=forms.EmailInput(
             attrs={
-                'placeholder': 'Enter your email address',
+                'placeholder': 'Enter valid email address',
                 'style': 'width: 400px',
             }
         ),
@@ -57,18 +63,18 @@ class SignInForm(AuthenticationForm):
     password = forms.CharField(
         widget=forms.PasswordInput(
             attrs={
-                'placeholder': 'Enter your password',
+                'placeholder': 'Enter password',
                 'style': 'width: 400px',
             }
         ),
     )
 
     def clean(self):
-        email = self.cleaned_data.get('email')
+        username = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password')
 
-        if email and password:
-            user = authenticate(username=email, password=password)
+        if username and password:
+            user = authenticate(username=username, password=password)
             if not user:
                 raise ValidationError('Incorrect email!')
             if not user.check_password(password):
@@ -77,14 +83,5 @@ class SignInForm(AuthenticationForm):
                 raise ValidationError('This user is not active!')
         return super(SignInForm, self).clean()
 
-    # def clean_password(self):
-    #     self.user = authenticate(
-    #         email=self.cleaned_data['email'],
-    #         password=self.cleaned_data['password'],
-    #     )
-    #
-    #     if not self.user:
-    #         raise ValidationError('Email and/or password incorrect')
-    #
-    # def save(self):
-    #     return self.user
+    def save(self):
+        return self.user
