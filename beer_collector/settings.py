@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'beer_collector.account',
     'beer_collector.collector_profile',
     'beer_collector.beer',
+    # 'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [
