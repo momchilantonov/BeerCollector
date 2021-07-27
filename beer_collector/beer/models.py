@@ -56,3 +56,18 @@ class BeerLike(models.Model):
         UserModel,
         on_delete=models.CASCADE,
     )
+
+
+class BeerComment(models.Model):
+    comment = models.TextField(
+        null=True,
+        blank=True,
+    )
+    beer = models.ForeignKey(
+        Beer,
+        on_delete=models.CASCADE,
+    )
+    user = models.ForeignKey(
+        UserModel,
+        on_delete=models.CASCADE,
+    )

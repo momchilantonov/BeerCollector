@@ -50,7 +50,9 @@
                 </label>
             {% endif %}
             <hr>
-            <a class="btn btn-primary" href="{% url 'profile edit' %}">Edit</a>
+            <a class="btn btn-outline-primary" href="{% url 'profile edit' %}">Edit</a>
+            <a class="btn btn-outline-primary" href="{% url 'change password' %}">Password</a>
+            <a class="btn btn-outline-primary" href="{% url 'delete account' user.id %}">Delete</a>
         </div>
     </div>
 {% endblock %}

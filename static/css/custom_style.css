@@ -9,12 +9,19 @@ body {
     font-size: 60px;
     margin-top: 20px;
 }
-.home_img {
+.home_img1 {
     display: block;
     margin-left: auto;
     margin-right: auto;
     margin-top: 20px;
     width: 10%;
+}
+.home_img2 {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    width: 7.5%;
 }
 .nav_img {
     height: 50px;

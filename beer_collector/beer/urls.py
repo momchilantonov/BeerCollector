@@ -1,6 +1,8 @@
 from django.urls import path
-from beer_collector.beer.views import create_beer_style, edit_beer_style, delete_beer_style, beer_style_details, \
-    create_beer, edit_beer, delete_beer, beer_details
+from beer_collector.beer.views import (
+    create_beer_style, edit_beer_style, delete_beer_style,
+    beer_style_details, create_beer, edit_beer, delete_beer, beer_details
+)
 
 urlpatterns = [
     path('create-beer-style/', create_beer_style, name='create beer style'),

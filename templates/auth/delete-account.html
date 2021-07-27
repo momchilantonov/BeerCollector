@@ -3,7 +3,7 @@
 {% block title %}Delete Profile{% endblock %}
 {% block content %}
     <h1 class="home_h1">Are you sure you want to delete your profile?</h1>
-    <form action="{% url 'delete account' %}" method="post">
+    <form action="{% url 'delete account' user.id %}" method="post">
         {% csrf_token %}
         <br>
         <div class="buttons">

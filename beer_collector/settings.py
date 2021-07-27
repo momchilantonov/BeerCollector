@@ -14,6 +14,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-hg_$jw#yx$&ct0)4!tggvo(&ika#j)(fo6)jk5!tw4$%&hw+ql'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -28,13 +29,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'django_cleanup.apps.CleanupConfig',
 
     # My apps
     'beer_collector.core',
     'beer_collector.account',
     'beer_collector.collector_profile',
     'beer_collector.beer',
-    # 'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [
@@ -127,11 +128,13 @@ MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Login settings
+# Login and logout settings
 
 LOGIN_URL = reverse_lazy('sign in')
 
 LOGIN_REDIRECT_URL = reverse_lazy('home page')
+
+LOGOUT_REDIRECT_URL = reverse_lazy('home page')
 
 # Custom user model settings
 

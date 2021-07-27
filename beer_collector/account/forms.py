@@ -1,6 +1,7 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import authenticate, get_user_model, password_validation
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm, SetPasswordForm
 from django.core.exceptions import ValidationError
 
 UserModel = get_user_model()
@@ -11,10 +12,11 @@ class SignUpForm(UserCreationForm):
         super(SignUpForm, self).__init__(*args, **kwargs)
 
     password1 = forms.CharField(
-        label="Password",
+        label=_("Password"),
         strip=False,
         widget=forms.PasswordInput(
             attrs={
+                'autocomplete': 'new-password',
                 'placeholder': 'Enter your password',
                 'style': 'width: 400px',
             }
@@ -22,10 +24,11 @@ class SignUpForm(UserCreationForm):
         help_text=password_validation.password_validators_help_text_html(),
     )
     password2 = forms.CharField(
-        label="Password confirmation",
+        label=_("Password confirmation"),
         strip=False,
         widget=forms.PasswordInput(
             attrs={
+                'autocomplete': 'new-password',
                 'placeholder': 'Confirm your password',
                 'style': 'width: 400px',
             }
@@ -41,7 +44,7 @@ class SignUpForm(UserCreationForm):
         widgets = {
             'email': forms.EmailInput(
                 attrs={
-                    'placeholder': 'Enter your email address',
+                    'placeholder': 'Enter valid email address',
                     'style': 'width: 400px',
                 }
             ),
@@ -55,6 +58,7 @@ class SignInForm(AuthenticationForm):
     username = forms.EmailField(
         widget=forms.EmailInput(
             attrs={
+                'autofocus': True,
                 'placeholder': 'Enter valid email address',
                 'style': 'width: 400px',
             }
@@ -63,7 +67,8 @@ class SignInForm(AuthenticationForm):
     password = forms.CharField(
         widget=forms.PasswordInput(
             attrs={
-                'placeholder': 'Enter password',
+                'autocomplete': 'current-password',
+                'placeholder': 'Enter your password',
                 'style': 'width: 400px',
             }
         ),
@@ -85,3 +90,42 @@ class SignInForm(AuthenticationForm):
 
     def save(self):
         return self.user
+
+
+class ChangePasswordForm(PasswordChangeForm, SetPasswordForm):
+    def __init__(self, *args, **kwargs):
+        super(ChangePasswordForm, self).__init__(*args, **kwargs)
+
+    old_password = forms.CharField(
+        label=_("Old password"),
+        strip=False,
+        widget=forms.PasswordInput(
+            attrs={
+                'placeholder': 'Enter your old password',
+                'style': 'width: 400px',
+            }
+        ),
+    )
+    new_password1 = forms.CharField(
+        label=_("New password"),
+        widget=forms.PasswordInput(
+            attrs={
+                'autocomplete': 'new-password',
+                'placeholder': 'Enter your new password',
+                'style': 'width: 400px',
+            }
+        ),
+        strip=False,
+        help_text=password_validation.password_validators_help_text_html(),
+    )
+    new_password2 = forms.CharField(
+        label=_("New password confirmation"),
+        strip=False,
+        widget=forms.PasswordInput(
+            attrs={
+                'autocomplete': 'new-password',
+                'placeholder': 'Confirm your new password',
+                'style': 'width: 400px',
+            }
+        ),
+    )
