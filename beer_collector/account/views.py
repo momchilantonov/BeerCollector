@@ -1,6 +1,6 @@
-from django.contrib.auth import login, logout, get_user_model, authenticate
-from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.shortcuts import render, redirect
+from django.contrib.auth import login, logout, authenticate, get_user_model
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, DeleteView, TemplateView
 from beer_collector.account.forms import SignUpForm, SignInForm, ChangePasswordForm
@@ -14,6 +14,7 @@ class SignUpView(CreateView):
     form_class = SignUpForm
     success_url = reverse_lazy('sign up done')
 
+    # OVERRIDE DEF FORM_VALID IF WE NEED TO LOGIN THE USER AFTER REGISTRATION
     # def form_valid(self, form):
     #     form.save()
     #     user = authenticate(
@@ -61,6 +62,7 @@ class DeleteAccountView(DeleteView):
 class DeleteAccountDoneView(TemplateView):
     template_name = 'auth/delete-account-done.html'
 
+# FBV VIEWS
 # def sign_up(req):
 #     if req.POST:
 #         form = SignUpForm(req.POST)

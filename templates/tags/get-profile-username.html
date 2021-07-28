@@ -1,9 +1,9 @@
 {% if not profile.username %}
     <li class="nav-item">
-        <a class="nav-link" href="{% url 'profile details' %}">Welcome, collector</a>
+        <a class="nav-link" href="{% url 'profile details' profile_id %}">Welcome, collector</a>
     </li>
 {% else %}
     <li class="nav-item">
-        <a class="nav-link" href="{% url 'profile details' %}">Welcome, {{ profile }}</a>
+        <a class="nav-link" href="{% url 'profile details' profile_id %}">Welcome, {{ profile.username }}</a>
     </li>
 {% endif %}

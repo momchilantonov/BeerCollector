@@ -2,7 +2,7 @@
 
 {% block title %}Edit Profile{% endblock %}
 {% block content %}
-    <form action="{% url 'profile edit' %}" method="post" enctype="multipart/form-data">
+    <form action="{% url 'profile edit' user.id %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="card border-primary mb-3">
             <div class="card-header">Please fill all the fields to complete your profile</div>
@@ -21,7 +21,7 @@
                 <hr>
                 <div class="buttons">
                     <button type="submit" class="btn btn-outline-success">Update</button>
-                    <a class="btn btn-outline-info" href="{% url 'profile details' %}">Cancel</a>
+                    <a class="btn btn-outline-info" href="{% url 'profile details' user.id %}">Cancel</a>
                 </div>
             </div>
         </div>

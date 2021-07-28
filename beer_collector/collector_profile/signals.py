@@ -1,10 +1,10 @@
 import os
 from django.conf import settings
+from beer_collector.core.views import get_obj_by_pk
+from django.db.models.signals import pre_delete, post_save, pre_save
 from django.contrib.auth import get_user_model
-from django.db.models.signals import post_save, pre_save, pre_delete
 from django.dispatch import receiver
 from beer_collector.collector_profile.models import CollectorProfile
-from beer_collector.core.views import get_obj_by_pk
 
 UserModel = get_user_model()
 
@@ -29,7 +29,7 @@ def is_profile_complete(sender, instance, **kwargs):
 
 
 @receiver(pre_delete, sender=UserModel)
-def delete_profile_image(sender, instance, **kwargs):
+def delete_image_when_delete_account(sender, instance, **kwargs):
     current_profile = get_obj_by_pk(CollectorProfile, instance.pk)
     current_profile_image_location = os.path.join(settings.MEDIA_ROOT, str(instance.email))
     if current_profile.image:

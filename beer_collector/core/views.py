@@ -17,4 +17,3 @@ def index(req):
     if not req.user.is_authenticated:
         return home_page_without_profile(req)
     return home_page_with_profile(req)
-

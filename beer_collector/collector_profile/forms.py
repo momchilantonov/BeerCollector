@@ -1,4 +1,6 @@
+import os
 from django import forms
+from django.conf import settings
 from beer_collector.collector_profile.models import CollectorProfile
 from beer_collector.core.views import get_obj_by_pk
 
@@ -6,9 +8,12 @@ from beer_collector.core.views import get_obj_by_pk
 class CollectorProfileForm(forms.ModelForm):
     def save(self, commit=True):
         current_profile = get_obj_by_pk(CollectorProfile, self.instance.pk)
-        if commit and current_profile.image:
-            current_profile.image.delete()
-        return super().save(commit=True)
+        new_image = self.files.get('image')
+        old_image = str(current_profile.image)
+        old_image_path = os.path.join(settings.MEDIA_ROOT, old_image)
+        if commit and new_image and old_image and not old_image_path == 'anonymous_profile_img.jpg':
+            os.remove(old_image_path)
+        return super().save(commit=commit)
 
     class Meta:
         model = CollectorProfile
