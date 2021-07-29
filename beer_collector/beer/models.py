@@ -9,6 +9,14 @@ class BeerStyle(models.Model):
     type = models.CharField(
         _('beer type'),
         max_length=20,
+        blank=True,
+        null=True,
+    )
+    description = models.CharField(
+        _('description'),
+        max_length=300,
+        blank=True,
+        null=True,
     )
     user = models.ForeignKey(
         UserModel,
@@ -17,6 +25,32 @@ class BeerStyle(models.Model):
 
     def __str__(self):
         return self.type
+
+
+class BeerStyleLike(models.Model):
+    beer_style = models.ForeignKey(
+        BeerStyle,
+        on_delete=models.CASCADE,
+    )
+    user = models.ForeignKey(
+        UserModel,
+        on_delete=models.CASCADE,
+    )
+
+
+class BeerStyleComment(models.Model):
+    comment = models.TextField(
+        blank=True,
+        null=True,
+    )
+    beer_style = models.ForeignKey(
+        BeerStyle,
+        on_delete=models.CASCADE,
+    )
+    user = models.ForeignKey(
+        UserModel,
+        on_delete=models.CASCADE,
+    )
 
 
 class Beer(models.Model):
@@ -31,6 +65,8 @@ class Beer(models.Model):
     description = models.CharField(
         _('beer description'),
         max_length=300,
+        blank=True,
+        null=True,
     )
     image = models.ImageField(
         _('beer image'),
@@ -60,8 +96,8 @@ class BeerLike(models.Model):
 
 class BeerComment(models.Model):
     comment = models.TextField(
-        null=True,
         blank=True,
+        null=True,
     )
     beer = models.ForeignKey(
         Beer,

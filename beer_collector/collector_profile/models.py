@@ -18,26 +18,31 @@ class CollectorProfile(models.Model):
         _('username'),
         max_length=20,
         blank=True,
+        null=True,
     )
     first_name = models.CharField(
         _('first name'),
         max_length=20,
         blank=True,
+        null=True,
     )
     last_name = models.CharField(
         _('last name'),
         max_length=20,
         blank=True,
+        null=True,
     )
     about = models.CharField(
         _('about'),
         max_length=300,
         blank=True,
+        null=True,
     )
     image = models.ImageField(
         _('image'),
         upload_to=image_upload_location,
         blank=True,
+        null=True,
     )
     is_complete = models.BooleanField(
         default=False,

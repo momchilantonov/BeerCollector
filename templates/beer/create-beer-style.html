@@ -1,0 +1,23 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Create Beer Style{% endblock %}
+{% block content %}
+    <form action="{% url 'create beer style' %}" method="post">
+        {% csrf_token %}
+        <div class="card border-primary mb-3">
+            <div class="card-header">Create your new beer</div>
+            <div class="card-body">
+                {{ form.errors }}
+                <p class="card-text">{{ form.type.label }}</p>
+                {{ form.type }}
+                <p class="card-text">{{ form.description.label }}</p>
+                {{ form.description }}
+                <hr>
+                <div class="buttons">
+                    <button type="submit" class="btn btn-outline-success">Create</button>
+                    <a class="btn btn-outline-info" href="{% url 'home page' %}">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}

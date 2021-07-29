@@ -4,15 +4,23 @@ from beer_collector.beer.models import BeerStyle, Beer
 
 class BeerStyleCreateForm(forms.ModelForm):
     class Meta:
-        mode = BeerStyle
-        fields = '__all__'
+        model = BeerStyle
+        exclude = ('user',)
         widgets = {
             'type': forms.TextInput(
                 attrs={
                     'placeholder': 'Enter beer type',
                     'style': 'width: 400px',
                 }
-            )
+            ),
+            'description': forms.Textarea(
+                attrs={
+                    'placeholder': 'Write something about this style',
+                    'rows': 6,
+                    'cols': 54,
+                    'style': 'resize: none',
+                }
+            ),
         }
 
 
