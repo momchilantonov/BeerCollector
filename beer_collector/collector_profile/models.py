@@ -1,9 +1,9 @@
 import os
-from django.contrib.auth import get_user_model
-from django.utils.translation import gettext_lazy as _
 from django.db import models
-from beer_collector.account.models import Account
+from django.contrib.auth import get_user_model
 from beer_collector.core.views import get_obj_by_pk
+from django.utils.translation import gettext_lazy as _
+from beer_collector.account.models import Account
 
 UserModel = get_user_model()
 
@@ -52,6 +52,3 @@ class CollectorProfile(models.Model):
         on_delete=models.CASCADE,
         primary_key=True,
     )
-
-    def __str__(self):
-        return self.username

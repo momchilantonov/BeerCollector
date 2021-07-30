@@ -23,18 +23,18 @@
         <div class="container-sm">
             {% if not profile.first_name %}
                 <h5>First name:</h5>
-                <h5>The first name is not specified</h5>
+                <h5><u>The first name is not specified</u></h5>
             {% else %}
                 <h5>First name:</h5>
-                <h5>{{ profile.first_name }}</h5>
+                <h5><u>{{ profile.first_name }}</u></h5>
             {% endif %}
             <br>
             {% if not profile.last_name %}
                 <h5>last name:</h5>
-                <h5>The last name is not specified</h5>
+                <h5><u>The last name is not specified</u></h5>
             {% else %}
                 <h5>last name:</h5>
-                <h5>{{ profile.last_name }}</h5>
+                <h5><u>{{ profile.last_name }}</u></h5>
             {% endif %}
             <br>
             {% if not profile.about %}
@@ -53,7 +53,6 @@
             <a class="btn btn-outline-primary" href="{% url 'profile edit' user.id %}">Edit</a>
             <a class="btn btn-outline-primary" href="{% url 'change password' %}">Password</a>
             <a class="btn btn-outline-primary" href="{% url 'delete account' user.id %}">Delete</a>
-            <br>
             <br>
             <h5><a href="{% url 'home page' %}">Go to Home Page</a></h5>
 

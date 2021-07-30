@@ -59,6 +59,3 @@ class Account(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = []
 
     objects = CustomAccountManager()
-
-    def __str__(self):
-        return self.email

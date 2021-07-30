@@ -5,7 +5,7 @@
     <form action="{% url 'create beer style' %}" method="post">
         {% csrf_token %}
         <div class="card border-primary mb-3">
-            <div class="card-header">Create your new beer</div>
+            <div class="card-header">Create your new beer style</div>
             <div class="card-body">
                 {{ form.errors }}
                 <p class="card-text">{{ form.type.label }}</p>

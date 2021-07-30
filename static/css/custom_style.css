@@ -104,6 +104,7 @@ body {
     display: inline-block;
     width: 100px;
     height: 38px;
+    margin-bottom: 20px;
 }
 
 .buttons {

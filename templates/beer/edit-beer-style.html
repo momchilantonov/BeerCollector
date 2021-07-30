@@ -1,0 +1,23 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Edit Beer Style{% endblock %}
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="card border-primary mb-3">
+            <div class="card-header">Edit your beer style</div>
+            <div class="card-body">
+                {{ form.errors }}
+                <p class="card-text">{{ form.type.label }}</p>
+                {{ form.type }}
+                <p class="card-text">{{ form.description.label }}</p>
+                {{ form.description }}
+                <hr>
+                <div class="buttons">
+                    <button type="submit" class="btn btn-outline-success">Edit</button>
+                    <a class="btn btn-outline-info" href="{% url 'beer style list' %}">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}

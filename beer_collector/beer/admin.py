@@ -1,5 +1,6 @@
 from django.contrib import admin
-from beer_collector.beer.models import BeerStyle, Beer, BeerLike, BeerStyleLike, BeerStyleComment, BeerComment
+from beer_collector.beer.models.beer import Beer, BeerLike, BeerComment
+from beer_collector.beer.models.beer_style import BeerStyle, BeerStyleLike, BeerStyleComment
 
 
 @admin.register(BeerStyle)

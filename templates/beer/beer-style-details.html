@@ -1,0 +1,80 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Beer Style Details{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.11.1/css/all.css">
+{% endblock %}
+{% block content %}
+    <div class="text-center">
+        <div class="container-sm">
+            <br>
+            <h5>Author:</h5>
+            {% if not beer_style.user.collectorprofile.username %}
+                <h5><u>Unknown Collector</u></h5>
+            {% else %}
+                <h5><u>{{ beer_style.user.collectorprofile.username }}</u></h5>
+            {% endif %}
+            <br>
+            <h5>BeerStyle:</h5>
+            <h5><u>{{ beer_style.type }}</u></h5>
+            <br>
+            <h5>Description:</h5>
+            <label>
+                <textarea class="textarea form-control" rows="4" cols="75"
+                          readonly>{{ beer_style.description }}</textarea>
+            </label>
+            <br>
+            {% if request.user.is_authenticated %}
+                {% if not is_owner %}
+                    {% if is_liked %}
+                        <h5>Have you considered refusing the treat?</h5>
+                        <a href="{% url 'beer style like' beer_style.id %}"><i class="fas fa-wine-glass fa-2x"></i></a>
+                    {% else %}
+                        <h5>Do you want to treat the author with a glass of beer?</h5>
+                        <a href="{% url 'beer style like' beer_style.id %}"><i class="fas fa-wine-glass-alt fa-2x"></i></a>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+            <p class="mt-2">Treats: {{ beer_style.likes_count }}</p>
+            <hr>
+            <h5>Comments:</h5>
+            {% if beer_style_comments %}
+                {% for comment in beer_style_comments %}
+                    {% if not beer_style.user.collectorprofile.username %}
+                        <label>
+                            Unknown Collector
+                            <textarea class="textarea form-control" rows="4" cols="75"
+                                      readonly>{{ comment.comment }}</textarea>
+                        </label>
+                        <br>
+                    {% else %}
+                        <label>
+                            {{ comment.user.collectorprofile.username }}
+                            <textarea class="textarea form-control" rows="4" cols="75"
+                                      readonly>{{ comment.comment }}</textarea>
+                        </label>
+                        <br>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <h5>There are no comments yet.</h5>
+            {% endif %}
+            {% if request.user.is_authenticated %}
+                <form action="{% url 'beer style add comment' beer_style.id %}" method="post">
+                    {% csrf_token %}
+                    {{ form.errors }}
+                    {{ beer_style_comment_form }}
+                    <div class="buttons">
+                        <button type="submit" class="btn btn-outline-primary">Add</button>
+                    </div>
+                </form>
+                <br>
+                {% if is_owner %}
+                    <hr>
+                    <a class="btn btn-outline-primary" href="{% url 'edit beer style' beer_style.id %}">Edit</a>
+                    <a class="btn btn-outline-primary" href="">Delete</a>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
