@@ -23,6 +23,9 @@ class BeerStyle(models.Model):
         on_delete=models.CASCADE,
     )
 
+    def __str__(self):
+        return self.type
+
 
 class BeerStyleLike(models.Model):
     beer_style = models.ForeignKey(

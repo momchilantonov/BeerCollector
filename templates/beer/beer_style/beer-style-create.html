@@ -2,7 +2,7 @@
 
 {% block title %}Create Beer Style{% endblock %}
 {% block content %}
-    <form action="{% url 'create beer style' %}" method="post">
+    <form action="{% url 'beer style create' %}" method="post">
         {% csrf_token %}
         <div class="card border-primary mb-3">
             <div class="card-header">Create your new beer style</div>

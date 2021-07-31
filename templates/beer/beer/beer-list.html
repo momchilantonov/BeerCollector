@@ -1,38 +1,43 @@
 {% extends 'core/base.html' %}
 {% load static %}
 
-{% block title %}Beer Styles List{% endblock %}
+{% block title %}Beer List{% endblock %}
 {% block content %}
     <div class="container-fluid">
+        <h4><a href="{% url 'home page' %}">Back</a></h4>
+        <br>
+        <div class="text-center">
+            <h4><a href="{% url 'beer create' %}">Create new beer</a></h4>
+        </div>
         <div class="row">
-            {% for beer_style in beer_styles %}
+            {% for beer in beers %}
                 <div class="col">
                     <div class="card border-dark mb-3">
                         <div class="card-header">
                             <div class="container">
                                 <div class="row">
                                     <div class="col">
-                                        <img class="header_img" src="{% static 'images/hmel.png' %}" alt="hmel img">
+                                        <img class="header_img" src="{% static 'images/beer.jpg' %}" alt="beer img">
                                     </div>
                                     <div class="col-6">
-                                        {{ beer_style.type }}
+                                        {{ beer.label }}
                                     </div>
                                     <div class="col">
-                                        <img class="header_img" src="{% static 'images/hmel.png' %}" alt="hmel img">
+                                        <img class="header_img" src="{% static 'images/beer.jpg' %}" alt="beer img">
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body">
-                            <p class="card-text">{{ beer_style.description }}</p>
+                            <p class="card-text">{{ beer.description }}</p>
                             <div class="buttons1">
-                                <a class="btn btn-outline-primary" href="{% url 'beer style details' beer_style.id %}">Details</a>
+                                <a class="btn btn-outline-primary" href="{% url 'beer details' beer.id %}">Details</a>
                             </div>
                         </div>
                     </div>
                 </div>
             {% endfor %}
-            {% if beer_styles %}
+            {% if beers %}
                 </div>
                 <ul class="pagination">
                     {% if page_obj.has_previous %}
@@ -52,6 +57,6 @@
                 </ul>
                 </div>
             {% else %}
-                <h1 class="home_h1">There are no styles yet.</h1>
+                <h1 class="home_h1">There are no beers yet.</h1>
             {% endif %}
 {% endblock %}

@@ -1,0 +1,100 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy, reverse
+from django.views.generic import CreateView, UpdateView, DeleteView, TemplateView, ListView
+from beer_collector.beer.forms.beer import BeerCreateForm, BeerEditForm, BeerCommentForm
+from beer_collector.beer.models.beer import Beer, BeerLike
+from beer_collector.core.views import get_obj_by_pk
+
+
+class CreateBeerView(LoginRequiredMixin, CreateView):
+    model = Beer
+    template_name = 'beer/beer/beer-create.html'
+    form_class = BeerCreateForm
+    success_url = reverse_lazy('beer list')
+    object = None
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        self.object = form.save()
+        return super().form_valid(form)
+
+
+class EditBeerView(UpdateView):
+    model = Beer
+    form_class = BeerEditForm
+    template_name = 'beer/beer/beer-edit.html'
+
+    def get_success_url(self):
+        beer_id = self.kwargs['pk']
+        return reverse_lazy('beer details', kwargs={'pk': beer_id})
+
+
+class DeleteBeerView(DeleteView):
+    model = Beer
+    template_name = 'beer/beer/beer-delete.html'
+
+    def get_success_url(self):
+        return reverse('beer delete done')
+
+
+class DeleteBeerDoneView(TemplateView):
+    template_name = 'beer/beer/beer-delete-done.html'
+
+
+class BeerListView(ListView):
+    model = Beer
+    template_name = 'beer/beer/beer-list.html'
+    context_object_name = 'beers'
+    paginate_by = 8
+
+
+def beer_details(req, pk):
+    beer = get_obj_by_pk(Beer, pk)
+    beer.likes_count = beer.beerlike_set.count()
+    beer_comments = beer.beercomment_set.all()
+    is_owner = beer.user == req.user
+    is_liked = beer.beerlike_set.filter(user_id=req.user.id).exists()
+    beer_comment_form = BeerCommentForm(
+        initial={
+            'obj_pk': pk,
+        }
+    )
+    context = {
+        'beer': beer,
+        'beer_comments': beer_comments,
+        'is_owner': is_owner,
+        'is_liked': is_liked,
+        'beer_comment_form': beer_comment_form,
+    }
+
+    return render(req, 'beer/beer/beer-details.html', context)
+
+
+@login_required
+def beer_like(req, pk):
+    beer = get_obj_by_pk(Beer, pk)
+    like_by_user = beer.beerlike_set.filter(user_id=req.user.id).first()
+
+    if like_by_user:
+        like_by_user.delete()
+    else:
+        like = BeerLike(
+            beer=beer,
+            user=req.user,
+        )
+        like.save()
+
+    return redirect('beer details', beer.id)
+
+
+@login_required
+def beer_comment(req, pk):
+    beer_comment_form = BeerCommentForm(req.POST)
+
+    if beer_comment_form.is_valid():
+        comment_beer = beer_comment_form.save(commit=False)
+        comment_beer.user = req.user
+        comment_beer.save()
+    return redirect('beer details', pk)

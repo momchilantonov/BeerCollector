@@ -1,0 +1,88 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Beer Details{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.11.1/css/all.css">
+{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <h4><a href="{% url 'beer list' %}">Back</a></h4>
+        <div class="text-center">
+            <div class="container-sm">
+                {% if not beer.image %}
+                    <img class="img-thumbnail" src="{% static 'images/no_beer.jpeg' %}" alt="no beer img">
+                {% else %}
+                    <img class="img-thumbnail" src="{{ beer.image.url }}" alt="beer img">
+                {% endif %}
+                <br>
+                <h5>Author:</h5>
+                {% if not beer.user.collectorprofile.username %}
+                    <h5><u>Unknown Collector</u></h5>
+                {% else %}
+                    <h5><u>{{ beer.user.collectorprofile.username }}</u></h5>
+                {% endif %}
+                <br>
+                <h5>BeerLabel:</h5>
+                <h5><u>{{ beer.label }}</u></h5>
+                <br>
+                <h5>BeerStyle:</h5>
+                <h5><u>{{ beer.type }}</u></h5>
+                <br>
+                <h5>Description:</h5>
+                <label>
+                <textarea class="textarea form-control" rows="4" cols="75"
+                          readonly>{{ beer.description }}</textarea>
+                </label>
+                <br>
+                {% if not is_owner %}
+                    {% if is_liked %}
+                        <h5>Have you considered refusing the treat?</h5>
+                        <a href="{% url 'beer like' beer.id %}"><i class="fas fa-wine-glass fa-2x"></i></a>
+                    {% else %}
+                        <h5>Do you want to treat the author with a glass of beer?</h5>
+                        <a href="{% url 'beer like' beer.id %}"><i class="fas fa-wine-glass-alt fa-2x"></i></a>
+                    {% endif %}
+                {% endif %}
+                <p class="mt-2">Beers: {{ beer.likes_count }}</p>
+                <hr>
+                <h5>Comments:</h5>
+                {% if beer_comments %}
+                    {% for comment in beer_comments %}
+                        {% if not beer.user.collectorprofile.username %}
+                            <label>
+                                Unknown Collector
+                                <textarea class="textarea form-control" rows="4" cols="75"
+                                          readonly>{{ comment.comment }}</textarea>
+                            </label>
+                            <br>
+                        {% else %}
+                            <label>
+                                {{ comment.user.collectorprofile.username }}
+                                <textarea class="textarea form-control" rows="4" cols="75"
+                                          readonly>{{ comment.comment }}</textarea>
+                            </label>
+                            <br>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <h5>There are no comments yet.</h5>
+                {% endif %}
+                <form action="{% url 'beer comment' beer.id %}" method="post">
+                    {% csrf_token %}
+{#                    {{ form.errors }}#}
+                    {{ beer_comment_form }}
+                    <div class="buttons">
+                        <button type="submit" class="btn btn-outline-primary">Add</button>
+                    </div>
+                </form>
+                <br>
+                {% if is_owner %}
+                    <hr>
+                    <a class="btn btn-outline-primary" href="{% url 'beer edit' beer.id %}">Edit</a>
+                    <a class="btn btn-outline-primary" href="{% url 'beer delete' beer.id %}">Delete</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

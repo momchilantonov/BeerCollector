@@ -1,0 +1,9 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Delete Beer Done{% endblock %}
+{% block content %}
+    <h1 class="home_h1">You have successfully delete your beer!</h1>
+    <div class="buttons">
+        <h3><a href="{% url 'beer list' %}">Return to Beer Club</a></h3>
+    </div>
+{% endblock %}

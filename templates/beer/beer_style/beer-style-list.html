@@ -1,0 +1,62 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Beer Styles List{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <h4><a href="{% url 'home page' %}">Back</a></h4>
+        <br>
+        <div class="text-center">
+            <h4><a href="{% url 'beer style create' %}">Create new beer style</a></h4>
+        </div>
+        <div class="row">
+            {% for beer_style in beer_styles %}
+                <div class="col">
+                    <div class="card border-dark mb-3">
+                        <div class="card-header">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        <img class="header_img" src="{% static 'images/hops.png' %}" alt="hops img">
+                                    </div>
+                                    <div class="col-6">
+                                        {{ beer_style.type }}
+                                    </div>
+                                    <div class="col">
+                                        <img class="header_img" src="{% static 'images/hops.png' %}" alt="hops img">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">{{ beer_style.description }}</p>
+                            <div class="buttons1">
+                                <a class="btn btn-outline-primary" href="{% url 'beer style details' beer_style.id %}">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            {% if beer_styles %}
+                </div>
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+                        <li class="page-item"><a class="page-link"
+                                                 href="?page={{ page_obj.previous_page_number }}">previous</a></li>
+                    {% endif %}
+                    <li class="page-item disabled"><a class="page-link" href="#">Page {{ page_obj.number }}
+                        of {{ page_obj.paginator.num_pages }}</a></li>
+                    {% if page_obj.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last
+                            &raquo;</a>
+                        </li>
+                    {% endif %}
+                </ul>
+                </div>
+            {% else %}
+                <h1 class="home_h1">There are no styles yet.</h1>
+            {% endif %}
+{% endblock %}

@@ -1,17 +1,18 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from beer_collector.core.views import get_obj_by_pk
 from django.contrib.auth.decorators import login_required
-from django.views.generic import CreateView, ListView, UpdateView
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView, TemplateView
 from beer_collector.beer.models.beer_style import BeerStyle, BeerStyleLike
 from beer_collector.beer.forms.beer_style import BeerStyleCreateForm, BeerStyleCommentForm, BeerStyleEditForm
 
 
-class CreateBeerStyleView(CreateView):
+class CreateBeerStyleView(LoginRequiredMixin, CreateView):
     model = BeerStyle
-    template_name = 'beer/create-beer-style.html'
+    template_name = 'beer/beer_style/beer-style-create.html'
     form_class = BeerStyleCreateForm
-    success_url = reverse_lazy('home page')
+    success_url = reverse_lazy('beer style list')
     object = None
 
     def form_valid(self, form):
@@ -23,16 +24,28 @@ class CreateBeerStyleView(CreateView):
 class EditBeerStyleView(UpdateView):
     model = BeerStyle
     form_class = BeerStyleEditForm
-    template_name = 'beer/edit-beer-style.html'
+    template_name = 'beer/beer_style/beer-style-edit.html'
 
     def get_success_url(self):
         beer_style_id = self.kwargs['pk']
         return reverse_lazy('beer style details', kwargs={'pk': beer_style_id})
 
 
+class DeleteBeerStyleView(DeleteView):
+    model = BeerStyle
+    template_name = 'beer/beer_style/beer-style-delete.html'
+
+    def get_success_url(self):
+        return reverse('beer style delete done')
+
+
+class DeleteBeerStyleDoneView(TemplateView):
+    template_name = 'beer/beer_style/beer-style-delete-done.html'
+
+
 class BeerStyleListView(ListView):
     model = BeerStyle
-    template_name = 'beer/beer-style-list.html'
+    template_name = 'beer/beer_style/beer-style-list.html'
     context_object_name = 'beer_styles'
     paginate_by = 8
 
@@ -45,7 +58,7 @@ def beer_style_details(req, pk):
     is_liked = beer_style.beerstylelike_set.filter(user_id=req.user.id).exists()
     beer_style_comment_form = BeerStyleCommentForm(
         initial={
-            'beer_style_pk': pk,
+            'obj_pk': pk,
         }
     )
     context = {
@@ -56,7 +69,7 @@ def beer_style_details(req, pk):
         'beer_style_comment_form': beer_style_comment_form,
     }
 
-    return render(req, 'beer/beer-style-details.html', context)
+    return render(req, 'beer/beer_style/beer-style-details.html', context)
 
 
 @login_required
@@ -73,7 +86,7 @@ def beer_style_like(req, pk):
         )
         like.save()
 
-    return redirect('beer style details', beer_style.pk)
+    return redirect('beer style details', beer_style.id)
 
 
 @login_required
