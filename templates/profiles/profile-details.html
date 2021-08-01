@@ -6,7 +6,7 @@
 {% block content %}
     <div class="text-center">
         {% if not profile.is_complete %}
-            {% profile_complete_notification %}
+            {% show_profile_complete_notification %}
         {% endif %}
         <br>
         {% if not profile.username %}
@@ -55,7 +55,8 @@
             <a class="btn btn-outline-primary" href="{% url 'delete account' user.id %}">Delete</a>
             <br>
             <h5><a href="{% url 'home page' %}">Go to Home Page</a></h5>
-
+            <br>
+            {% show_progress_bar %}
         </div>
     </div>
 {% endblock %}

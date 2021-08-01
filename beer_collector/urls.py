@@ -9,4 +9,5 @@ urlpatterns = [
                   path('auth/', include('beer_collector.account.urls')),
                   path('profile/', include('beer_collector.collector_profile.urls')),
                   path('beer/', include('beer_collector.beer.urls')),
+                  path('pub/', include('beer_collector.pub.urls'))
               ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

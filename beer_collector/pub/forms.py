@@ -1,10 +1,10 @@
 from django import forms
 from django.core.files.images import get_image_dimensions
 from django.core.exceptions import ValidationError
-from beer_collector.beer.models.beer import Beer, BeerComment
+from beer_collector.pub.models import Pub, PubComment
 
 
-class BeerCreateForm(forms.ModelForm):
+class PubCreateForm(forms.ModelForm):
     MAX_IMAGE_WIDTH = 1200
     MAX_IMAGE_HEIGHT = 900
     MIN_IMAGE_WIDTH = 250
@@ -15,32 +15,33 @@ class BeerCreateForm(forms.ModelForm):
 
         if image:
             width, height = get_image_dimensions(image)
-            if BeerCreateForm.MIN_IMAGE_WIDTH > width > BeerCreateForm.MAX_IMAGE_WIDTH or \
-                    BeerCreateForm.MIN_IMAGE_HEIGHT > height > BeerCreateForm.MAX_IMAGE_HEIGHT:
+            if PubCreateForm.MIN_IMAGE_WIDTH > width > PubCreateForm.MAX_IMAGE_WIDTH or \
+                    PubCreateForm.MIN_IMAGE_HEIGHT > height > PubCreateForm.MAX_IMAGE_HEIGHT:
                 raise ValidationError("Width or Height is larger than what is allowed")
 
         return image
 
     class Meta:
-        model = Beer
+        model = Pub
         exclude = ('user',)
         widgets = {
-            'label': forms.TextInput(
+            'name': forms.TextInput(
                 attrs={
-                    'placeholder': 'Enter beer label',
+                    'placeholder': 'Enter pub name',
                     'style': 'width: 400px',
                     'class': 'form-control',
                 }
             ),
-            'type': forms.Select(
+            'address': forms.TextInput(
                 attrs={
+                    'placeholder': 'Enter pub address',
                     'style': 'width: 400px',
-                    'class': 'form-select'
+                    'class': 'form-control',
                 }
             ),
             'description': forms.Textarea(
                 attrs={
-                    'placeholder': 'Write something about this beer',
+                    'placeholder': 'Write something about this pub',
                     'rows': 6,
                     'cols': 60,
                     'style': 'resize: none',
@@ -56,21 +57,21 @@ class BeerCreateForm(forms.ModelForm):
         }
 
 
-class BeerEditForm(BeerCreateForm):
+class PubEditForm(PubCreateForm):
     pass
 
 
-class BeerCommentForm(forms.ModelForm):
+class PubCommentForm(forms.ModelForm):
     obj_pk = forms.IntegerField(
         widget=forms.HiddenInput()
     )
 
     def save(self, commit=True):
-        beer_style_pk = self.cleaned_data['obj_pk']
-        beer = Beer.objects.get(pk=beer_style_pk)
-        comment = BeerComment(
+        pub_pk = self.cleaned_data['obj_pk']
+        pub = Pub.objects.get(pk=pub_pk)
+        comment = PubComment(
             comment=self.cleaned_data['comment'],
-            beer=beer,
+            pub=pub,
         )
 
         if commit:
@@ -79,12 +80,12 @@ class BeerCommentForm(forms.ModelForm):
         return comment
 
     class Meta:
-        model = BeerComment
+        model = PubComment
         fields = ('comment', 'obj_pk')
         widgets = {
             'comment': forms.Textarea(
                 attrs={
-                    'placeholder': 'Write something about this beer',
+                    'placeholder': 'Enter yor comment here.',
                     'rows': 6,
                     'cols': 60,
                     'style': 'resize: none; background-color:transparent',

@@ -18,14 +18,16 @@ class BeerStyleCreateForm(forms.ModelForm):
                 attrs={
                     'placeholder': 'Enter beer type',
                     'style': 'width: 400px',
+                    'class': 'form-control',
                 }
             ),
             'description': forms.Textarea(
                 attrs={
                     'placeholder': 'Write something about this style',
                     'rows': 6,
-                    'cols': 54,
+                    'cols': 60,
                     'style': 'resize: none',
+                    'class': 'form-control',
                 }
             ),
         }
@@ -76,6 +78,7 @@ class BeerStyleCommentForm(forms.ModelForm):
                     'rows': 6,
                     'cols': 60,
                     'style': 'resize: none; background-color:transparent',
+                    'class': 'form-control',
                 }
             )
         }

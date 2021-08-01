@@ -24,14 +24,12 @@ class CollectorProfileForm(forms.ModelForm):
 
     def clean_image(self):
         image = self.cleaned_data.get('image', False)
-        width, height = get_image_dimensions(image)
 
         if image:
+            width, height = get_image_dimensions(image)
             if CollectorProfileForm.MIN_IMAGE_WIDTH > width > CollectorProfileForm.MAX_IMAGE_WIDTH or \
                     CollectorProfileForm.MIN_IMAGE_HEIGHT > height > CollectorProfileForm.MAX_IMAGE_HEIGHT:
                 raise ValidationError("Width or Height is larger than what is allowed")
-        else:
-            raise ValidationError("No image found")
 
         return image
 
@@ -43,26 +41,30 @@ class CollectorProfileForm(forms.ModelForm):
                 attrs={
                     'placeholder': 'Enter username',
                     'style': 'width: 400px',
+                    'class': 'form-control',
                 }
             ),
             'first_name': forms.TextInput(
                 attrs={
                     'placeholder': 'Enter first name',
                     'style': 'width: 400px',
+                    'class': 'form-control',
                 }
             ),
             'last_name': forms.TextInput(
                 attrs={
                     'placeholder': 'Enter last name',
                     'style': 'width: 400px',
+                    'class': 'form-control',
                 }
             ),
             'about': forms.Textarea(
                 attrs={
                     'placeholder': 'Write something about yourself',
                     'rows': 6,
-                    'cols': 54,
+                    'cols': 60,
                     'style': 'resize: none',
+                    'class': 'form-control',
                 }
             ),
             'image': forms.FileInput(

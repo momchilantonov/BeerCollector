@@ -1,0 +1,14 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Delete Pub{% endblock %}
+{% block content %}
+    <h1 class="home_h1">Are you sure you want to delete your pub?</h1>
+    <form action="{% url 'pub delete' object.id %}" method="post">
+        {% csrf_token %}
+        <br>
+        <div class="buttons">
+            <button type="submit" class="btn btn-danger">Yes</button>
+            <a class="btn btn-info" href="">No</a>
+        </div>
+    </form>
+{% endblock %}

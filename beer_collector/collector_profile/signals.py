@@ -26,6 +26,8 @@ def is_profile_complete(sender, instance, **kwargs):
             and instance.image \
             and instance.about:
         instance.is_complete = True
+    else:
+        instance.is_complete = False
 
 
 @receiver(pre_delete, sender=UserModel)

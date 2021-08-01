@@ -1,0 +1,31 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Edit Pub{% endblock %}
+{% block content %}
+    <form action="{% url 'profile edit' object.id %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="card border-primary mb-3">
+            <div class="card-header">Create your new pub</div>
+            <div class="card-body">
+                {{ form.errors }}
+                <p class="card-text">{{ form.name.label }}</p>
+                {{ form.name }}
+                <p class="card-text">{{ form.address.label }}</p>
+                {{ form.address }}
+                <p class="card-text">{{ form.description.label }}</p>
+                {{ form.description }}
+                <p class="card-text">{{ form.longitude.label }}</p>
+                {{ form.longitude }}
+                <p class="card-text">{{ form.latitude.label }}</p>
+                {{ form.latitude }}
+                <p class="card-text">{{ form.iamge.label }}</p>
+                {{ form.image }}
+                <hr>
+                <div class="buttons">
+                    <button type="submit" class="btn btn-outline-success">Edit</button>
+                    <a class="btn btn-outline-info" href="{% url 'home page' %}">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
