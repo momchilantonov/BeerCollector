@@ -9,7 +9,7 @@ UserModel = get_user_model()
 class Beer(models.Model):
     label = models.CharField(
         _('beer label'),
-        max_length=60,
+        max_length=30,
     )
     type = models.ForeignKey(
         BeerStyle,

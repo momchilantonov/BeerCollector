@@ -25,7 +25,7 @@ def show_profile_username(context):
     }
 
 
-@register.inclusion_tag('tags/show-progress-bar.html', takes_context=True)
+@register.inclusion_tag('tags/show-profile-progress-bar.html', takes_context=True)
 def show_progress_bar(context):
     user_id = context.request.user.id
     profile = get_obj_by_pk(CollectorProfile, user_id)
@@ -34,12 +34,13 @@ def show_progress_bar(context):
         profile.first_name,
         profile.last_name,
         profile.about,
-        profile.image,
+        str(profile.image),
     ]
-    percentage = 0
+    percentage = 100
+
     for credential in profile_credentials_list:
-        if credential is not None:
-            percentage += 20
+        if credential is None or credential == '':
+            percentage -= 20
 
     return {
         'percentage': percentage

@@ -4,9 +4,11 @@
 {% block title %}Home Page Profile{% endblock %}
 {% block content %}
     <h1 class="home_h1">Welcome back Collector!</h1>
-    <img class="home_img2" src="{% static 'images/home_page_img2.png' %}" alt="home page image">
     <br>
+    <img class="home_img2" src="{% static 'images/home_page_img2.png' %}" alt="home page image">
+    <br><br>
     <div class="buttons">
+        <br>
         <h4><a href="{% url 'beer style create' %}">You have found a new style?</a></h4>
         <h4>or</h4>
         <h4><a href="{% url 'beer create' %}">You were on a beer hunt?</a></h4>

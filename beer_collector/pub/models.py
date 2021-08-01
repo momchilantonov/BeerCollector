@@ -8,11 +8,11 @@ UserModel = get_user_model()
 class Pub(models.Model):
     name = models.CharField(
         _('pub name'),
-        max_length=60,
+        max_length=30,
     )
     address = models.CharField(
         _('pub address'),
-        max_length=100,
+        max_length=60,
         blank=True,
         null=True,
     )

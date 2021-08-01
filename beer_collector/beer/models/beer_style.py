@@ -8,7 +8,7 @@ UserModel = get_user_model()
 class BeerStyle(models.Model):
     type = models.CharField(
         _('beer type'),
-        max_length=20,
+        max_length=30,
         blank=True,
         null=True,
     )
