@@ -22,6 +22,11 @@ class Pub(models.Model):
         blank=True,
         null=True,
     )
+    website = models.URLField(
+        _('pub website'),
+        blank=True,
+        null=True,
+    )
     image = models.ImageField(
         _('pub image'),
         upload_to='pubs/%Y/%m/%d',

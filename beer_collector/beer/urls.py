@@ -1,11 +1,11 @@
 from django.urls import path
 from beer_collector.beer.views.beer import (
     CreateBeerView, EditBeerView, DeleteBeerView, DeleteBeerDoneView,
-    BeerListView, beer_details, beer_like, beer_comment,
+    BeerListView, beer_details, beer_like, beer_comment, BeerUserListView,
 )
 from beer_collector.beer.views.beer_style import (
     CreateBeerStyleView, EditBeerStyleView, DeleteBeerStyleView, DeleteBeerStyleDoneView,
-    BeerStyleListView, beer_style_details, beer_style_like, beer_style_comment,
+    BeerStyleListView, BeerStyleUserListView, beer_style_details, beer_style_like, beer_style_comment,
 )
 
 urlpatterns = [
@@ -14,6 +14,7 @@ urlpatterns = [
     path('beer-style-delete/<int:pk>', DeleteBeerStyleView.as_view(), name='beer style delete'),
     path('beer-style-delete-done/', DeleteBeerStyleDoneView.as_view(), name='beer style delete done'),
     path('beer-style-list/', BeerStyleListView.as_view(), name='beer style list'),
+    path('beer-style-user-list/', BeerStyleUserListView.as_view(), name='beer style user list'),
     path('beer-style-details/<int:pk>', beer_style_details, name='beer style details'),
     path('beer-style-like/<int:pk>', beer_style_like, name='beer style like'),
     path('beer-style-comment/<int:pk>', beer_style_comment, name='beer style comment'),
@@ -22,6 +23,8 @@ urlpatterns = [
     path('beer-delete/<int:pk>', DeleteBeerView.as_view(), name='beer delete'),
     path('beer-delete-done/', DeleteBeerDoneView.as_view(), name='beer delete done'),
     path('beer-list/', BeerListView.as_view(), name='beer list'),
+    path('beer-user-list/', BeerUserListView.as_view(), name='beer user list'),
+
     path('beer-details/<int:pk>', beer_details, name='beer details'),
     path('beer-like/<int:pk>', beer_like, name='beer like'),
     path('beer-comment/<int:pk>', beer_comment, name='beer comment'),

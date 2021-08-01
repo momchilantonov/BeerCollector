@@ -12,6 +12,8 @@
                 {{ form.name }}
                 <p class="card-text">{{ form.address.label }}</p>
                 {{ form.address }}
+                <p class="card-text">{{ form.website.label }}</p>
+                {{ form.website }}
                 <p class="card-text">{{ form.description.label }}</p>
                 {{ form.description }}
                 <p class="card-text">{{ form.longitude.label }}</p>
@@ -23,9 +25,9 @@
                 <hr>
                 <div class="buttons">
                     <button type="submit" class="btn btn-outline-success">Edit</button>
-                    <a class="btn btn-outline-info" href="{% url 'pub list' %}">Cancel</a>
+                    <a class="btn btn-outline-info" href="{{request.META.HTTP_REFERER}}">Cancel</a>
                 </div>
             </div>
         </div>
-    </form>
+    </form>;
 {% endblock %}

@@ -48,6 +48,12 @@ class PubCreateForm(forms.ModelForm):
                     'class': 'form-control',
                 }
             ),
+            'website': forms.URLInput(
+                attrs={
+                    'placeholder': 'Enter valid url',
+                    'class': 'form-control',
+                }
+            ),
             'image': forms.FileInput(
                 attrs={
                     'style': 'width: 145; height: 200',

@@ -50,6 +50,18 @@ class BeerStyleListView(ListView):
     paginate_by = 8
 
 
+class BeerStyleUserListView(ListView):
+    model = BeerStyle
+    template_name = 'beer/beer_style/beer-style-user-list.html'
+    context_object_name = 'beer_styles'
+    paginate_by = 8
+
+    def get_queryset(self):
+        q_set = super().get_queryset()
+        user = self.request.user
+        return q_set.filter(user=user)
+
+
 def beer_style_details(req, pk):
     beer_style = get_obj_by_pk(BeerStyle, pk)
     beer_style.likes_count = beer_style.beerstylelike_set.count()

@@ -33,6 +33,28 @@
                     <h5><u>{{ pub.address }}</u></h5>
                 {% endif %}
                 <br>
+                <h5>Location:</h5>
+                {% if not pub_location %}
+                    <div>
+                        <h5><u>No Location</u></h5>
+                    </div>
+                {% else %}
+                    <div>
+                        {{ pub_location|safe }}
+                    </div>
+                {% endif %}
+                <br>
+                <h5>Website:</h5>
+                {% if not pub.website %}
+                    <div>
+                        <h5><u>No Website</u></h5>
+                    </div>
+                {% else %}
+                    <div>
+                        <h5><u><a href="{{ pub.website }}" target="_blank">Visit the pub's website here</a></u></h5>
+                    </div>
+                {% endif %}
+                <br>
                 <h5>Description:</h5>
                 {% if not pub.description %}
                     <label>
