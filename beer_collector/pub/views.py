@@ -71,7 +71,10 @@ def pub_details(req, pk):
     if pub_longitude and pub_latitude:
         location_map = Map(location=[pub_latitude, pub_longitude], zoom_start=20)
         Marker([pub_latitude, pub_longitude], tooltip='Click',
-               popup=f'Pub name: {pub.name}\nPub address: {pub.address}').add_to(location_map)
+               popup=f'Pub name: {pub.name}'
+                     f'\nPub address: {pub.address}'
+                     f'\nLatitude: {pub_latitude}'
+                     f'\nLongitude: {pub_longitude}').add_to(location_map)
         location_map = location_map._repr_html_()
     pub.likes_count = pub.publike_set.count()
     pub_comments = pub.pubcomment_set.all()

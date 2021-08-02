@@ -1,0 +1,46 @@
+{% load static %}
+
+<h5>Your stats:</h5>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <img class="header_img" src="{% static 'images/hops.png' %}" alt="hops img">
+            &ensp;
+            {{ beer_styles_count }}
+        </div>
+        <div class="col">
+            <img class="header_img" src="{% static 'images/beer.png' %}" alt="beer img">
+            &ensp;
+            {{ beers_count }}
+        </div>
+        <div class="col">
+            <img class="header_img" src="{% static 'images/pub.png' %}" alt="pub img">
+            &ensp;
+            {{ pubs_count }}
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col">
+            &ensp;
+            <i class="fas fa-hand-peace fa-lg"></i>
+            &ensp;
+            &emsp;
+            {{ beer_styles_likes_count }}
+        </div>
+        <div class="col">
+            &ensp;
+            <i class="fas fa-wine-glass fa-lg"></i>
+            &ensp;
+            &emsp;
+            {{ beer_likes_count }}
+        </div>
+        <div class="col">
+            &ensp;
+            <i class="fas fa-gem fa-lg"></i>
+            &ensp;
+            &emsp;
+            {{ pub_likes_count }}
+        </div>
+    </div>
+</div>

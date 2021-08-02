@@ -81,11 +81,7 @@ class SignInForm(AuthenticationForm):
         if username and password:
             user = authenticate(username=username, password=password)
             if not user:
-                raise ValidationError('Incorrect email!')
-            if not user.check_password(password):
-                raise ValidationError('Incorrect password!')
-            if not user.is_active:
-                raise ValidationError('This user is not active!')
+                raise ValidationError('Incorrect email and/or password!')
         return super(SignInForm, self).clean()
 
     def save(self):

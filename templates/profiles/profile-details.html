@@ -3,9 +3,11 @@
 {% load profile_templatetags %}
 
 {% block title %}Profile Details{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.11.1/css/all.css">
+{% endblock %}
 {% block content %}
     <div class="container-fluid">
-        <h4><a href="{% url 'home page' %}">Back</a></h4>
         <div class="text-center">
             {% if not profile.is_complete %}
                 {% show_profile_complete_notification %}
@@ -52,6 +54,8 @@
                                   readonly>{{ profile.about }}</textarea>
                     </label>
                 {% endif %}
+                <hr>
+                {% show_profile_stats %}
                 <hr>
                 <a class="btn btn-outline-primary" href="{% url 'profile edit' user.id %}">Edit</a>
                 <a class="btn btn-outline-primary" href="{% url 'change password' %}">Password</a>
