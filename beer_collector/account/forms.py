@@ -1,7 +1,8 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import authenticate, get_user_model, password_validation
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm, SetPasswordForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm, SetPasswordForm, \
+    PasswordResetForm
 from django.core.exceptions import ValidationError
 
 UserModel = get_user_model()
@@ -19,6 +20,7 @@ class SignUpForm(UserCreationForm):
                 'autocomplete': 'new-password',
                 'placeholder': 'Enter your password',
                 'style': 'width: 400px',
+                'class': 'form-control',
             }
         ),
         help_text=password_validation.password_validators_help_text_html(),
@@ -31,6 +33,7 @@ class SignUpForm(UserCreationForm):
                 'autocomplete': 'new-password',
                 'placeholder': 'Confirm your password',
                 'style': 'width: 400px',
+                'class': 'form-control',
             }
         ),
         help_text=password_validation.password_validators_help_text_html(),
@@ -46,6 +49,7 @@ class SignUpForm(UserCreationForm):
                 attrs={
                     'placeholder': 'Enter valid email address',
                     'style': 'width: 400px',
+                    'class': 'form-control',
                 }
             ),
         }
@@ -61,6 +65,7 @@ class SignInForm(AuthenticationForm):
                 'autofocus': True,
                 'placeholder': 'Enter valid email address',
                 'style': 'width: 400px',
+                'class': 'form-control',
             }
         ),
     )
@@ -70,6 +75,7 @@ class SignInForm(AuthenticationForm):
                 'autocomplete': 'current-password',
                 'placeholder': 'Enter your password',
                 'style': 'width: 400px',
+                'class': 'form-control',
             }
         ),
     )
@@ -99,6 +105,7 @@ class ChangePasswordForm(PasswordChangeForm, SetPasswordForm):
             attrs={
                 'placeholder': 'Enter your old password',
                 'style': 'width: 400px',
+                'class': 'form-control',
             }
         ),
     )
@@ -109,6 +116,7 @@ class ChangePasswordForm(PasswordChangeForm, SetPasswordForm):
                 'autocomplete': 'new-password',
                 'placeholder': 'Enter your new password',
                 'style': 'width: 400px',
+                'class': 'form-control',
             }
         ),
         strip=False,
@@ -122,6 +130,56 @@ class ChangePasswordForm(PasswordChangeForm, SetPasswordForm):
                 'autocomplete': 'new-password',
                 'placeholder': 'Confirm your new password',
                 'style': 'width: 400px',
+                'class': 'form-control',
+            }
+        ),
+    )
+
+
+class ResetForgottenPasswordForm(PasswordResetForm):
+    def __init__(self, *args, **kwargs):
+        super(ResetForgottenPasswordForm, self).__init__(*args, **kwargs)
+
+    email = forms.EmailField(
+        label=_("Email"),
+        max_length=254,
+        widget=forms.EmailInput(
+            attrs={
+                'autocomplete': 'email',
+                'placeholder': 'Enter your email address',
+                'style': 'width: 400px',
+                'class': 'form-control',
+            }
+        ),
+    )
+
+
+class SetForgottenPasswordForm(SetPasswordForm):
+    def __init__(self, *args, **kwargs):
+        super(SetForgottenPasswordForm, self).__init__(*args, **kwargs)
+
+    new_password1 = forms.CharField(
+        label=_("New password"),
+        widget=forms.PasswordInput(
+            attrs={
+                'autocomplete': 'new-password',
+                'placeholder': 'Enter your new password',
+                'style': 'width: 400px',
+                'class': 'form-control',
+            }
+        ),
+        strip=False,
+        help_text=password_validation.password_validators_help_text_html(),
+    )
+    new_password2 = forms.CharField(
+        label=_("New password confirmation"),
+        strip=False,
+        widget=forms.PasswordInput(
+            attrs={
+                'autocomplete': 'new-password',
+                'placeholder': 'Confirm your new password',
+                'style': 'width: 400px',
+                'class': 'form-control',
             }
         ),
     )

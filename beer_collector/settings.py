@@ -140,3 +140,13 @@ LOGOUT_REDIRECT_URL = reverse_lazy('home page')
 # Custom user model settings
 
 AUTH_USER_MODEL = 'account.Account'
+
+# Registration with confirmation email settings
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+MAILER_EMAIL_BACKEND = EMAIL_BACKEND
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'beer.collector.confirm.mail@gmail.com'
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = 587
