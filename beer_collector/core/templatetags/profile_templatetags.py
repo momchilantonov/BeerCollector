@@ -1,8 +1,8 @@
 from django import template
 from beer_collector.beer.models.beer import Beer
 from beer_collector.beer.models.beer_style import BeerStyle
-from beer_collector.core.views import get_obj_by_pk
 from beer_collector.collector_profile.models import CollectorProfile
+from beer_collector.core.utilities import get_obj_by_pk
 from beer_collector.pub.models import Pub
 
 register = template.Library()

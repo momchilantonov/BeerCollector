@@ -1,15 +1,8 @@
 from django import forms
-from django.core.files.images import get_image_dimensions
-from django.core.exceptions import ValidationError
 from beer_collector.beer.models.beer_style import BeerStyle, BeerStyleComment
 
 
 class BeerStyleCreateForm(forms.ModelForm):
-    MAX_IMAGE_WIDTH = 1200
-    MAX_IMAGE_HEIGHT = 900
-    MIN_IMAGE_WIDTH = 250
-    MIN_IMAGE_HEIGHT = 200
-
     class Meta:
         model = BeerStyle
         exclude = ('user',)
@@ -31,19 +24,6 @@ class BeerStyleCreateForm(forms.ModelForm):
                 }
             ),
         }
-
-    def clean_image(self):
-        image = self.cleaned_data.get('image', False)
-        width, height = get_image_dimensions(image)
-
-        if image:
-            if BeerStyleCreateForm.MIN_IMAGE_WIDTH > width > BeerStyleCreateForm.MAX_IMAGE_WIDTH or \
-                    BeerStyleCreateForm.MIN_IMAGE_HEIGHT > height > BeerStyleCreateForm.MAX_IMAGE_HEIGHT:
-                raise ValidationError("Width or Height is larger than what is allowed")
-        else:
-            raise ValidationError("No image found")
-
-        return image
 
 
 class BeerStyleEditForm(BeerStyleCreateForm):

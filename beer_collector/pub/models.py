@@ -29,7 +29,7 @@ class Pub(models.Model):
     )
     image = models.ImageField(
         _('pub image'),
-        upload_to='pubs/%Y/%m/%d',
+        upload_to='pubs',
         blank=True,
         null=True,
     )

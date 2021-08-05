@@ -1,16 +1,10 @@
-import os
 from django.db import models
 from django.contrib.auth import get_user_model
-from beer_collector.core.views import get_obj_by_pk
 from django.utils.translation import gettext_lazy as _
 from beer_collector.account.models import Account
+from beer_collector.core.utilities import image_upload_location
 
 UserModel = get_user_model()
-
-
-def image_upload_location(instance, filename):
-    current_user = get_obj_by_pk(Account, instance.pk)
-    return f'{os.path.join(current_user.email, filename)}'
 
 
 class CollectorProfile(models.Model):

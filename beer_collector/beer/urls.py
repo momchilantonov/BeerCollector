@@ -24,7 +24,6 @@ urlpatterns = [
     path('beer-delete-done/', DeleteBeerDoneView.as_view(), name='beer delete done'),
     path('beer-list/', BeerListView.as_view(), name='beer list'),
     path('beer-user-list/', BeerUserListView.as_view(), name='beer user list'),
-
     path('beer-details/<int:pk>', beer_details, name='beer details'),
     path('beer-like/<int:pk>', beer_like, name='beer like'),
     path('beer-comment/<int:pk>', beer_comment, name='beer comment'),

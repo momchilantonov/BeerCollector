@@ -5,7 +5,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView, DeleteView, TemplateView, ListView
 from beer_collector.beer.forms.beer import BeerCreateForm, BeerEditForm, BeerCommentForm
 from beer_collector.beer.models.beer import Beer, BeerLike
-from beer_collector.core.views import get_obj_by_pk
+from beer_collector.core.utilities import get_obj_by_pk
 
 
 class CreateBeerView(LoginRequiredMixin, CreateView):

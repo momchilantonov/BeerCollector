@@ -1,11 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
-from beer_collector.core.views import get_obj_by_pk
 from django.contrib.auth.decorators import login_required
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView, TemplateView
 from beer_collector.beer.models.beer_style import BeerStyle, BeerStyleLike
 from beer_collector.beer.forms.beer_style import BeerStyleCreateForm, BeerStyleCommentForm, BeerStyleEditForm
+from beer_collector.core.utilities import get_obj_by_pk
 
 
 class CreateBeerStyleView(LoginRequiredMixin, CreateView):

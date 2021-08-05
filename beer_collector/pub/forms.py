@@ -1,23 +1,15 @@
 from django import forms
-from django.core.files.images import get_image_dimensions
-from django.core.exceptions import ValidationError
+from beer_collector.core.utilities import delete_previous_image
+from beer_collector.core.validators import Validator
 from beer_collector.pub.models import Pub, PubComment
 
 
 class PubCreateForm(forms.ModelForm):
-    MAX_IMAGE_WIDTH = 1200
-    MAX_IMAGE_HEIGHT = 900
-    MIN_IMAGE_WIDTH = 250
-    MIN_IMAGE_HEIGHT = 200
-
     def clean_image(self):
         image = self.cleaned_data.get('image', False)
 
         if image:
-            width, height = get_image_dimensions(image)
-            if PubCreateForm.MIN_IMAGE_WIDTH > width > PubCreateForm.MAX_IMAGE_WIDTH or \
-                    PubCreateForm.MIN_IMAGE_HEIGHT > height > PubCreateForm.MAX_IMAGE_HEIGHT:
-                raise ValidationError("Width or Height is larger than what is allowed")
+            Validator.image_size_validation(image)
 
         return image
 
@@ -64,7 +56,9 @@ class PubCreateForm(forms.ModelForm):
 
 
 class PubEditForm(PubCreateForm):
-    pass
+    def save(self, commit=True):
+        delete_previous_image(self, commit, Pub, 'no_beer.jpeg')
+        return super().save(commit=commit)
 
 
 class PubCommentForm(forms.ModelForm):

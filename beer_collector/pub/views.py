@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView, DeleteView, TemplateView, ListView
 from folium import Map, Marker
-from beer_collector.core.views import get_obj_by_pk
+from beer_collector.core.utilities import get_obj_by_pk
 from beer_collector.pub.forms import PubCreateForm, PubEditForm, PubCommentForm
 from beer_collector.pub.models import Pub, PubLike
 

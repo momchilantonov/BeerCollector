@@ -1,0 +1,5 @@
+* some pics in details views
+* add some other validations
+* mixin for styles or something else
+*** bug on 'back' link in MyLists and Cancel in Details
+**** tests

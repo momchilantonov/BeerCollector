@@ -1,8 +1,4 @@
-from django.shortcuts import render, redirect
-
-
-def get_obj_by_pk(obj, pk):
-    return obj.objects.get(pk=pk)
+from django.shortcuts import render
 
 
 def home_page_with_profile(req):

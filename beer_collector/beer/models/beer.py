@@ -23,7 +23,7 @@ class Beer(models.Model):
     )
     image = models.ImageField(
         _('beer image'),
-        upload_to='beers/%Y/%m/%d',
+        upload_to='beers',
         blank=True,
         null=True,
     )

@@ -1,5 +1,4 @@
 from django.contrib import admin
-
 from beer_collector.pub.models import Pub, PubLike, PubComment
 
 

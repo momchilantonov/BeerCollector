@@ -1,10 +1,10 @@
 import os
 from django.conf import settings
-from beer_collector.core.views import get_obj_by_pk
 from django.db.models.signals import pre_delete, post_save, pre_save
 from django.contrib.auth import get_user_model
 from django.dispatch import receiver
 from beer_collector.collector_profile.models import CollectorProfile
+from beer_collector.core.utilities import get_obj_by_pk
 
 UserModel = get_user_model()
 

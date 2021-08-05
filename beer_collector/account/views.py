@@ -10,11 +10,13 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views.generic import CreateView, DeleteView, TemplateView
 from django.contrib.auth.views import (
-    LoginView, LogoutView, PasswordChangeView,
-    PasswordChangeDoneView, PasswordResetView, PasswordResetConfirmView,
+    LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView,
+    PasswordResetView, PasswordResetConfirmView, PasswordResetDoneView, PasswordResetCompleteView,
 )
-from beer_collector.account.forms import SignUpForm, SignInForm, ChangePasswordForm, ResetForgottenPasswordForm, \
-    SetForgottenPasswordForm
+from beer_collector.account.forms import (
+    SignUpForm, SignInForm, ChangePasswordForm,
+    ResetForgottenPasswordForm, SetForgottenPasswordForm,
+)
 
 UserModel = get_user_model()
 
@@ -93,9 +95,17 @@ class ResetForgottenPasswordView(PasswordResetView):
     form_class = ResetForgottenPasswordForm
 
 
-class ConfirmResetPasswordView(PasswordResetConfirmView):
+class ResetForgottenPasswordDoneView(PasswordResetDoneView):
+    template_name = 'auth/reset-password-done.html'
+
+
+class ResetForgottenPasswordConfirmView(PasswordResetConfirmView):
     template_name = 'auth/reset-password-confirm.html'
     form_class = SetForgottenPasswordForm
+
+
+class ResetForgottenPasswordComplete(PasswordResetCompleteView):
+    template_name = 'auth/reset-password-complete.html'
 
 
 class DeleteAccountView(DeleteView):
