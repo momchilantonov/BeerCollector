@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
@@ -7,7 +6,7 @@ from django.template.loader import render_to_string
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth import get_user_model, logout
 from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.http import urlsafe_base64_encode
 from django.views.generic import CreateView, DeleteView, TemplateView
 from django.contrib.auth.views import (
     LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView,
@@ -48,25 +47,8 @@ class SignUpView(CreateView):
         return render(self.request, 'auth/account_activation_needed.html')
 
 
-def activate_account(request, uidb64, token):
-    try:
-        uid = urlsafe_base64_decode(uidb64).decode()
-        user = UserModel.objects.get(pk=uid)
-    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
-    if user is not None and default_token_generator.check_token(user, token):
-        context = {
-            'form': SignInForm,
-        }
-        user.is_active = True
-        user.save()
-        return render(request, 'auth/account-activate-done.html', context)
-    else:
-        return render(request, 'auth/account_activation_invalid.html')
-
-
-class SuccessfulActivationDone(TemplateView):
-    template_name = ''
+class SuccessfulActivationDoneView(TemplateView):
+    template_name = 'auth/account-activate-done.html'
 
 
 class SignInView(LoginView):

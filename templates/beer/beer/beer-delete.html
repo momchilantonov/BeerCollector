@@ -3,7 +3,7 @@
 {% block title %}Delete Beer{% endblock %}
 {% block content %}
     <h1 class="home_h1">Are you sure you want to delete your beer?</h1>
-    <form action="{% url 'beer delete' object.id %}" method="post">
+    <form action="{% url 'beer delete' object.id %}" method="post" novalidate>
         {% csrf_token %}
         <br>
         <div class="buttons">

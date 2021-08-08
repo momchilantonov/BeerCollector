@@ -2,7 +2,7 @@
 
 {% block title %}Sign Up{% endblock %}
 {% block content %}
-    <form action="{% url 'sign up' %}" method="post">
+    <form action="{% url 'sign up' %}" method="post" novalidate>
         {% csrf_token %}
         <div class="card border-primary mb-3">
             <div class="card-header">Please fill all the fields to Sign Up</div>

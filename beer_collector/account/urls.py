@@ -1,15 +1,16 @@
 from django.urls import path
+from beer_collector.account.email_activation import activate_account
 from beer_collector.account.views import (
-    SignUpView, activate_account, SignInView, SignOutView, SuccessfulActivationDone,
-    ChangePasswordView, ResetForgottenPasswordView, DeleteAccountView, DeleteAccountDoneView,
-    ChangePasswordDoneView, ResetForgottenPasswordConfirmView, ResetForgottenPasswordDoneView,
-    ResetForgottenPasswordComplete,
+    SignUpView, SuccessfulActivationDoneView, SignInView, SignOutView,
+    ChangePasswordView, ChangePasswordDoneView, ResetForgottenPasswordView,
+    ResetForgottenPasswordDoneView, ResetForgottenPasswordConfirmView,
+    ResetForgottenPasswordComplete, DeleteAccountView, DeleteAccountDoneView,
 )
 
 urlpatterns = [
     path('sign-up/', SignUpView.as_view(), name='sign up'),
     path('activate/<uidb64>/<token>/', activate_account, name='activate'),
-    path('activation-success/', SuccessfulActivationDone.as_view(), name='activation success'),
+    path('activation-success/', SuccessfulActivationDoneView.as_view(), name='activation success'),
     path('sign-in/', SignInView.as_view(), name='sign in'),
     path('sign-out/', SignOutView.as_view(), name='sign out'),
     path('change-password/', ChangePasswordView.as_view(), name='change password'),

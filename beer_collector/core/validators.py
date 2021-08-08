@@ -1,6 +1,5 @@
 from django.core.exceptions import ValidationError
 from django.core.files.images import get_image_dimensions
-
 from beer_collector.core.constants import ALLOWED_IMAGE_SIZE
 
 

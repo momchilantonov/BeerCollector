@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth.hashers import check_password
+from django.contrib.auth.models import AnonymousUser
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import authenticate, get_user_model, password_validation
 from django.core.exceptions import ValidationError
@@ -88,12 +90,28 @@ class SignInForm(AuthenticationForm):
 
         if username and password:
             user = authenticate(username=username, password=password)
+
             if not user:
-                raise ValidationError('Incorrect email and/or password!')
+                try:
+                    user = UserModel.objects.get(email=username)
+                    if not check_password(password, user.password):
+                        raise forms.ValidationError(
+                            {'password': 'Incorrect password.'}
+                        )
+                    elif not user.is_active:
+                        raise forms.ValidationError(
+                            {'username': 'Inactive account.'}
+                        )
+                except UserModel.DoesNotExist:
+                    raise forms.ValidationError(
+                        {'username': 'Incorrect email.'}
+                    )
+
         return super(SignInForm, self).clean()
 
-    def save(self):
-        return self.user
+
+def save(self):
+    return self.user
 
 
 class ChangePasswordForm(PasswordChangeForm, SetPasswordForm):

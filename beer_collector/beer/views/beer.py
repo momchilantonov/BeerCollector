@@ -1,8 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, UpdateView, DeleteView, TemplateView, ListView
+from django.views.generic import CreateView, UpdateView, DeleteView, TemplateView, ListView, DetailView
 from beer_collector.beer.forms.beer import BeerCreateForm, BeerEditForm, BeerCommentForm
 from beer_collector.beer.models.beer import Beer, BeerLike
 from beer_collector.core.utilities import get_obj_by_pk
@@ -62,26 +62,30 @@ class BeerUserListView(ListView):
         return q_set.filter(user=user)
 
 
-def beer_details(req, pk):
-    beer = get_obj_by_pk(Beer, pk)
-    beer.likes_count = beer.beerlike_set.count()
-    beer_comments = beer.beercomment_set.all()
-    is_owner = beer.user == req.user
-    is_liked = beer.beerlike_set.filter(user_id=req.user.id).exists()
-    beer_comment_form = BeerCommentForm(
-        initial={
-            'obj_pk': pk,
-        }
-    )
-    context = {
-        'beer': beer,
-        'beer_comments': beer_comments,
-        'is_owner': is_owner,
-        'is_liked': is_liked,
-        'beer_comment_form': beer_comment_form,
-    }
+class BeerDetails(DetailView):
+    model = Beer
+    template_name = 'beer/beer/beer-details.html'
+    context_object_name = 'beer'
 
-    return render(req, 'beer/beer/beer-details.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        beer = context['beer']
+        beer.likes_count = beer.beerlike_set.count()
+        beer_comments = beer.beercomment_set.all()
+        is_owner = beer.user == self.request.user
+        is_liked = beer.beerlike_set.filter(user_id=self.request.user.id).exists()
+        beer_comment_form = BeerCommentForm(
+            initial={
+                'obj_pk': self.object.pk,
+            }
+        )
+
+        context['beer_comments'] = beer_comments
+        context['is_owner'] = is_owner
+        context['is_liked'] = is_liked
+        context['beer_comment_form'] = beer_comment_form
+
+        return context
 
 
 @login_required

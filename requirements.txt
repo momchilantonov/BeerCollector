@@ -2,6 +2,7 @@ asgiref==3.4.1
 branca==0.4.2
 certifi==2021.5.30
 charset-normalizer==2.0.4
+coverage==5.5
 Django==3.2.5
 django-cleanup==5.2.0
 folium==0.12.1

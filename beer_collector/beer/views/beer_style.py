@@ -1,8 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.decorators import login_required
-from django.views.generic import CreateView, ListView, UpdateView, DeleteView, TemplateView
+from django.views.generic import CreateView, ListView, UpdateView, DeleteView, TemplateView, DetailView
 from beer_collector.beer.models.beer_style import BeerStyle, BeerStyleLike
 from beer_collector.beer.forms.beer_style import BeerStyleCreateForm, BeerStyleCommentForm, BeerStyleEditForm
 from beer_collector.core.utilities import get_obj_by_pk
@@ -62,26 +62,30 @@ class BeerStyleUserListView(ListView):
         return q_set.filter(user=user)
 
 
-def beer_style_details(req, pk):
-    beer_style = get_obj_by_pk(BeerStyle, pk)
-    beer_style.likes_count = beer_style.beerstylelike_set.count()
-    beer_style_comments = beer_style.beerstylecomment_set.all()
-    is_owner = beer_style.user == req.user
-    is_liked = beer_style.beerstylelike_set.filter(user_id=req.user.id).exists()
-    beer_style_comment_form = BeerStyleCommentForm(
-        initial={
-            'obj_pk': pk,
-        }
-    )
-    context = {
-        'beer_style': beer_style,
-        'beer_style_comments': beer_style_comments,
-        'is_owner': is_owner,
-        'is_liked': is_liked,
-        'beer_style_comment_form': beer_style_comment_form,
-    }
+class BeerStyleDetails(DetailView):
+    model = BeerStyle
+    template_name = 'beer/beer_style/beer-style-details.html'
+    context_object_name = 'beer_style'
 
-    return render(req, 'beer/beer_style/beer-style-details.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        beer_style = context['beer_style']
+        beer_style.likes_count = beer_style.beerstylelike_set.count()
+        beer_style_comments = beer_style.beerstylecomment_set.all()
+        is_owner = beer_style.user == self.request.user
+        is_liked = beer_style.beerstylelike_set.filter(user_id=self.request.user.id).exists()
+        beer_style_comment_form = BeerStyleCommentForm(
+            initial={
+                'obj_pk': self.object.pk,
+            }
+        )
+
+        context['beer_style_comments'] = beer_style_comments
+        context['is_owner'] = is_owner
+        context['is_liked'] = is_liked
+        context['beer_style_comment_form'] = beer_style_comment_form
+
+        return context
 
 
 @login_required

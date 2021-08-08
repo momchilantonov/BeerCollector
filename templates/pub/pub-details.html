@@ -112,7 +112,7 @@
                     <h5>There are no comments yet.</h5>
                 {% endif %}
                 <br>
-                <form action="{% url 'pub comment' pub.id %}" method="post">
+                <form action="{% url 'pub comment' pub.id %}" method="post" novalidate>
                     {% csrf_token %}
                     {{ form.errors }}
                     {{ pub_comment_form }}

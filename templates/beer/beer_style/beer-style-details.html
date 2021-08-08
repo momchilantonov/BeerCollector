@@ -76,7 +76,7 @@
                     <h5>There are no comments yet.</h5>
                 {% endif %}
                 <br>
-                <form action="{% url 'beer style comment' beer_style.id %}" method="post">
+                <form action="{% url 'beer style comment' beer_style.id %}" method="post" novalidate>
                     {% csrf_token %}
                     {{ form.errors }}
                     {{ beer_style_comment_form }}

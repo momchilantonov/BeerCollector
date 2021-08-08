@@ -2,7 +2,7 @@
 
 {% block title %}Edit Beer Style{% endblock %}
 {% block content %}
-    <form action="{% url 'beer style edit' object.id %}" method="post">
+    <form action="{% url 'beer style edit' object.id %}" method="post" novalidate>
         {% csrf_token %}
         <div class="card border-primary mb-3">
             <div class="card-header">Edit your beer style</div>

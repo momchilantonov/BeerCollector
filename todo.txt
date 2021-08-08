@@ -1,5 +1,7 @@
-* some pics in details views
-* add some other validations
-* mixin for styles or something else
-*** bug on 'back' link in MyLists and Cancel in Details
-**** tests
+* add some background images in details views
+* add some other custom validations
+* create mixin for widget styles or something else
+** add something in README.md
+** make Deployment
+*** solve the bug on 'back' link in MyLists and Cancel in Details
+**** make all tests (activate email and reset forgotten password)

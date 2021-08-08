@@ -1,8 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
-from django.views.generic import CreateView, UpdateView, DeleteView, TemplateView, ListView
+from django.views.generic import CreateView, UpdateView, DeleteView, TemplateView, ListView, DetailView
 from folium import Map, Marker
 from beer_collector.core.utilities import get_obj_by_pk
 from beer_collector.pub.forms import PubCreateForm, PubEditForm, PubCommentForm
@@ -63,38 +63,43 @@ class PubUserListView(ListView):
         return q_set.filter(user=user)
 
 
-def pub_details(req, pk):
-    pub = get_obj_by_pk(Pub, pk)
-    pub_longitude = pub.longitude
-    pub_latitude = pub.latitude
-    location_map = None
-    if pub_longitude and pub_latitude:
-        location_map = Map(location=[pub_latitude, pub_longitude], zoom_start=20)
-        Marker([pub_latitude, pub_longitude], tooltip='Click',
-               popup=f'Pub name: {pub.name}'
-                     f'\nPub address: {pub.address}'
-                     f'\nLatitude: {pub_latitude}'
-                     f'\nLongitude: {pub_longitude}').add_to(location_map)
-        location_map = location_map._repr_html_()
-    pub.likes_count = pub.publike_set.count()
-    pub_comments = pub.pubcomment_set.all()
-    is_owner = pub.user == req.user
-    is_liked = pub.publike_set.filter(user_id=req.user.id).exists()
-    pub_comment_form = PubCommentForm(
-        initial={
-            'obj_pk': pk,
-        }
-    )
-    context = {
-        'pub': pub,
-        'pub_location': location_map,
-        'pub_comments': pub_comments,
-        'is_owner': is_owner,
-        'is_liked': is_liked,
-        'pub_comment_form': pub_comment_form,
-    }
+class PubDetails(DetailView):
+    model = Pub
+    template_name = 'pub/pub-details.html'
+    context_object_name = 'pub'
 
-    return render(req, 'pub/pub-details.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pub = context['pub']
+        pub_longitude = pub.longitude
+        pub_latitude = pub.latitude
+        location_map = None
+
+        if pub_longitude and pub_latitude:
+            location_map = Map(location=[pub_latitude, pub_longitude], zoom_start=20)
+            Marker([pub_latitude, pub_longitude], tooltip='Click',
+                   popup=f'Pub name: {pub.name}'
+                         f'\nPub address: {pub.address}'
+                         f'\nLatitude: {pub_latitude}'
+                         f'\nLongitude: {pub_longitude}').add_to(location_map)
+            location_map = location_map._repr_html_()
+        pub.likes_count = pub.publike_set.count()
+        pub_comments = pub.pubcomment_set.all()
+        is_owner = pub.user == self.request.user
+        is_liked = pub.publike_set.filter(user_id=self.request.user.id).exists()
+        pub_comment_form = PubCommentForm(
+            initial={
+                'obj_pk': self.object.pk,
+            }
+        )
+
+        context['pub_location'] = location_map
+        context['pub_comments'] = pub_comments
+        context['is_owner'] = is_owner
+        context['is_liked'] = is_liked
+        context['pub_comment_form'] = pub_comment_form
+
+        return context
 
 
 @login_required
