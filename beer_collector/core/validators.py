@@ -11,4 +11,4 @@ class Validator:
 
         if ALLOWED_IMAGE_SIZE['max_image_width'] < width or \
                 ALLOWED_IMAGE_SIZE['max_image_height'] < height:
-            raise ValidationError("Width or Height is larger than what is allowed")
+            raise ValidationError('Width or Height is larger than what is allowed.')

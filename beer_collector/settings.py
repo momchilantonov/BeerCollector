@@ -29,7 +29,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'django_cleanup.apps.CleanupConfig',
 
     # My apps
     'beer_collector.core',
@@ -76,7 +75,7 @@ WSGI_APPLICATION = 'beer_collector.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'beerCollector',
+        'NAME': 'BeerCollectorDB',
         'USER': 'antonov',
         'PASSWORD': 'antonov8501',
         'HOST': '127.0.0.1',

@@ -1,6 +1,7 @@
 * add some background images in details views
 * add some other custom validations
 * create mixin for widget styles or something else
+* create search filter in navbar
 ** add something in README.md
 ** make Deployment
 *** solve the bug on 'back' link in MyLists and Cancel in Details

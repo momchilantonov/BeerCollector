@@ -6,7 +6,7 @@ from beer_collector.core.validators import Validator
 
 class BeerCreateForm(forms.ModelForm):
     def clean_image(self):
-        image = self.cleaned_data.get('image', False)
+        image = self.cleaned_data.get('image')
 
         if image:
             Validator.image_size_validation(image)

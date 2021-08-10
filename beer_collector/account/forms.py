@@ -1,9 +1,7 @@
 from django import forms
 from django.contrib.auth.hashers import check_password
-from django.contrib.auth.models import AnonymousUser
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import authenticate, get_user_model, password_validation
-from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import (
     UserCreationForm, AuthenticationForm, PasswordChangeForm,
     SetPasswordForm, PasswordResetForm,
@@ -63,27 +61,6 @@ class SignInForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super(SignInForm, self).__init__(*args, **kwargs)
 
-    username = forms.EmailField(
-        widget=forms.EmailInput(
-            attrs={
-                'autofocus': True,
-                'placeholder': 'Enter valid email address',
-                'style': 'width: 400px',
-                'class': 'form-control',
-            }
-        ),
-    )
-    password = forms.CharField(
-        widget=forms.PasswordInput(
-            attrs={
-                'autocomplete': 'current-password',
-                'placeholder': 'Enter your password',
-                'style': 'width: 400px',
-                'class': 'form-control',
-            }
-        ),
-    )
-
     def clean(self):
         username = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password')
@@ -109,9 +86,29 @@ class SignInForm(AuthenticationForm):
 
         return super(SignInForm, self).clean()
 
+    def save(self):
+        return self.user
 
-def save(self):
-    return self.user
+    username = forms.EmailField(
+        widget=forms.EmailInput(
+            attrs={
+                'autofocus': True,
+                'placeholder': 'Enter valid email address',
+                'style': 'width: 400px',
+                'class': 'form-control',
+            }
+        ),
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                'autocomplete': 'current-password',
+                'placeholder': 'Enter your password',
+                'style': 'width: 400px',
+                'class': 'form-control',
+            }
+        ),
+    )
 
 
 class ChangePasswordForm(PasswordChangeForm, SetPasswordForm):

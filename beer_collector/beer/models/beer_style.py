@@ -9,8 +9,6 @@ class BeerStyle(models.Model):
     type = models.CharField(
         _('beer type'),
         max_length=30,
-        blank=True,
-        null=True,
     )
     description = models.CharField(
         _('description'),

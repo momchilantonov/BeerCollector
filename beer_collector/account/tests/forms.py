@@ -1,6 +1,5 @@
 from django.test import TestCase
-from beer_collector.account.forms import SignUpForm, SignInForm, ChangePasswordForm, ResetForgottenPasswordForm, \
-    SetForgottenPasswordForm
+from beer_collector.account.forms import SignUpForm, SignInForm, ChangePasswordForm, SetForgottenPasswordForm
 from beer_collector.core.tests.core import CoreTestCase
 
 
@@ -95,7 +94,7 @@ class TestSignUpForm(TestCase):
 class TestSignInForm(CoreTestCase):
     def test_valid_form(self):
         data = {
-            'username': 'test@test.com',
+            'username': 'test1@test1.com',
             'password': 'test1234',
         }
         form = SignInForm(data=data)
@@ -121,7 +120,7 @@ class TestSignInForm(CoreTestCase):
 
     def test_empty_password_field(self):
         data = {
-            'username': 'test@test.com',
+            'username': 'test1@test1.com',
         }
         form = SignInForm(data=data)
         print(form.errors)
@@ -140,7 +139,7 @@ class TestSignInForm(CoreTestCase):
 
     def test_invalid_password_credential(self):
         data = {
-            'username': 'test@test.com',
+            'username': 'test1@test1.com',
             'password': 'test5678',
         }
         form = SignInForm(data=data)
@@ -149,10 +148,10 @@ class TestSignInForm(CoreTestCase):
         self.assertFalse(form.is_valid())
 
     def test_inActive_account(self):
-        self.user.is_active = False
-        self.user.save()
+        self.user1.is_active = False
+        self.user1.save()
         data = {
-            'username': 'test@test.com',
+            'username': 'test1@test1.com',
             'password': 'test1234',
         }
         form = SignInForm(data=data)
@@ -168,13 +167,13 @@ class TestChangePasswordForm(CoreTestCase):
             'new_password1': 'MegaHard1234',
             'new_password2': 'MegaHard1234',
         }
-        form = ChangePasswordForm(data=data, user=self.user)
+        form = ChangePasswordForm(data=data, user=self.user1)
         print(form.errors)
         self.assertTrue(form.is_valid())
 
     def test_empty_form(self):
         data = {}
-        form = ChangePasswordForm(data=data, user=self.user)
+        form = ChangePasswordForm(data=data, user=self.user1)
         print(form.errors)
         self.assertEqual(form.errors['old_password'], ['This field is required.'])
         self.assertEqual(form.errors['new_password1'], ['This field is required.'])
@@ -187,7 +186,7 @@ class TestChangePasswordForm(CoreTestCase):
             'new_password1': 'MegaHard1234',
             'new_password2': 'MegaHard1234',
         }
-        form = ChangePasswordForm(data=data, user=self.user)
+        form = ChangePasswordForm(data=data, user=self.user1)
         print(form.errors)
         self.assertEqual(form.errors['old_password'],
                          ['Your old password was entered incorrectly. Please enter it again.'])
@@ -199,7 +198,7 @@ class TestChangePasswordForm(CoreTestCase):
             'new_password1': 'Mega1234',
             'new_password2': 'MegaHard1234',
         }
-        form = ChangePasswordForm(data=data, user=self.user)
+        form = ChangePasswordForm(data=data, user=self.user1)
         print(form.errors)
         self.assertEqual(form.errors['new_password2'], ['The two password fields didn’t match.'])
         self.assertFalse(form.is_valid())
@@ -211,17 +210,17 @@ class TestSetForgottenPasswordForm(CoreTestCase):
             'new_password1': 'test5678',
             'new_password2': 'test5678',
         }
-        form = SetForgottenPasswordForm(data=data, user=self.user)
+        form = SetForgottenPasswordForm(data=data, user=self.user1)
         print(form.errors)
         self.assertTrue(form.is_valid())
 
     def test_different_newPasswords(self):
-        self.user.save()
+        self.user1.save()
         data = {
             'new_password1': 'Pass9012',
             'new_password2': 'Pass5678',
         }
-        form = SetForgottenPasswordForm(data=data, user=self.user)
+        form = SetForgottenPasswordForm(data=data, user=self.user1)
         print(form.errors)
         self.assertEqual(form.errors['new_password2'], ['The two password fields didn’t match.'])
         self.assertFalse(form.is_valid())
