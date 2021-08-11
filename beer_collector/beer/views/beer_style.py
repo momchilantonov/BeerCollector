@@ -34,9 +34,13 @@ class EditBeerStyleView(UpdateView):
 class DeleteBeerStyleView(DeleteView):
     model = BeerStyle
     template_name = 'beer/beer_style/beer-style-delete.html'
+    success_url = reverse_lazy('beer style delete done')
 
-    def get_success_url(self):
-        return reverse('beer style delete done')
+    def post(self, request, *args, **kwargs):
+        if "No" in request.POST:
+            return redirect('beer style list')
+        else:
+            return super(DeleteBeerStyleView, self).post(request, *args, **kwargs)
 
 
 class DeleteBeerStyleDoneView(TemplateView):

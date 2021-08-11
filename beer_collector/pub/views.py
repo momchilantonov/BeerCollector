@@ -35,9 +35,13 @@ class EditPubView(UpdateView):
 class DeletePubView(DeleteView):
     model = Pub
     template_name = 'pub/pub-delete.html'
+    success_url = reverse_lazy('beer style delete done')
 
-    def get_success_url(self):
-        return reverse('pub delete done')
+    def post(self, request, *args, **kwargs):
+        if "No" in request.POST:
+            return redirect('beer style list')
+        else:
+            return super(DeletePubView, self).post(request, *args, **kwargs)
 
 
 class DeletePubDoneView(TemplateView):
