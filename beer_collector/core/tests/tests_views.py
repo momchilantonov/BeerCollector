@@ -1,4 +1,4 @@
-from beer_collector.core.tests.core import CoreTestCase
+from beer_collector.core.tests.tests_core import CoreTestCase
 from django.contrib import auth
 from django.urls import reverse
 

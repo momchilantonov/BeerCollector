@@ -1,10 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, TemplateView, ListView, DetailView
 from beer_collector.beer.forms.beer import BeerCreateForm, BeerEditForm, BeerCommentForm
 from beer_collector.beer.models.beer import Beer, BeerLike
+from beer_collector.beer.models.beer_style import BeerStyle
 from beer_collector.core.utilities import get_obj_by_pk
 
 
@@ -13,12 +14,15 @@ class CreateBeerView(LoginRequiredMixin, CreateView):
     template_name = 'beer/beer/beer-create.html'
     form_class = BeerCreateForm
     success_url = reverse_lazy('beer list')
-    object = None
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        self.object = form.save()
         return super().form_valid(form)
+
+    def get_form(self, form_class=None):
+        form = super().get_form()
+        form.fields['type'].queryset = BeerStyle.objects.filter(user=self.request.user)
+        return form
 
 
 class EditBeerView(UpdateView):
@@ -34,11 +38,11 @@ class EditBeerView(UpdateView):
 class DeleteBeerView(DeleteView):
     model = Beer
     template_name = 'beer/beer/beer-delete.html'
-    success_url = reverse_lazy('beer style delete done')
+    success_url = reverse_lazy('beer delete done')
 
     def post(self, request, *args, **kwargs):
         if "No" in request.POST:
-            return redirect('beer style list')
+            return redirect('beer list')
         else:
             return super(DeleteBeerView, self).post(request, *args, **kwargs)
 

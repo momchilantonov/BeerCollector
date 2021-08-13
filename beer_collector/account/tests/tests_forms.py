@@ -1,6 +1,6 @@
 from django.test import TestCase
 from beer_collector.account.forms import SignUpForm, SignInForm, ChangePasswordForm, SetForgottenPasswordForm
-from beer_collector.core.tests.core import CoreTestCase
+from beer_collector.core.tests.tests_core import CoreTestCase
 
 
 class TestSignUpForm(TestCase):

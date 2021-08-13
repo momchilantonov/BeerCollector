@@ -1,5 +1,5 @@
 from beer_collector.beer.forms.beer_style import BeerStyleCreateForm, BeerStyleEditForm, BeerStyleCommentForm
-from beer_collector.core.tests.core import CoreTestCase
+from beer_collector.core.tests.tests_core import CoreTestCase
 
 
 class TestBeerStyleCreateForm(CoreTestCase):

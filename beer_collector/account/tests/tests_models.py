@@ -1,5 +1,5 @@
 from datetime import datetime
-from beer_collector.core.tests.core import CoreTestCase
+from beer_collector.core.tests.tests_core import CoreTestCase
 
 
 class TestAccountModel(CoreTestCase):

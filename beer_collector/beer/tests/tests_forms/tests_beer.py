@@ -1,6 +1,6 @@
 import tempfile
 from beer_collector.beer.forms.beer import BeerCreateForm, BeerEditForm, BeerCommentForm
-from beer_collector.core.tests.core import CoreTestCase
+from beer_collector.core.tests.tests_core import CoreTestCase
 
 
 class TestBeerCreateForm(CoreTestCase):

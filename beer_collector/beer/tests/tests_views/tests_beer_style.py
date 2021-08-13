@@ -1,6 +1,6 @@
 from django.urls import reverse
-from beer_collector.beer.models.beer_style import BeerStyle
-from beer_collector.core.tests.core import CoreTestCase
+from beer_collector.beer.models.beer_style import BeerStyle, BeerStyleLike
+from beer_collector.core.tests.tests_core import CoreTestCase
 
 
 class TestCreateBeerStyleView(CoreTestCase):
@@ -31,7 +31,7 @@ class TestCreateBeerStyleView(CoreTestCase):
 class TestEditBeerStyleView(CoreTestCase):
     def test_edit_beerStyle_view(self):
         self.client.force_login(self.user1)
-        response = self.client.get(reverse('beer style edit', args=(self.user1.id,)))
+        response = self.client.get(reverse('beer style edit', args=(self.beer_style.id,)))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'beer/beer_style/beer-style-edit.html')
         self.assertContains(response, 'Edit your beer style')
@@ -52,7 +52,7 @@ class TestEditBeerStyleView(CoreTestCase):
 class TestDeleteBeerStyleView(CoreTestCase):
     def test_delete_beerStyle_view(self):
         self.client.force_login(self.user1)
-        response = self.client.get(reverse('beer style delete', args=(self.user1.id,)))
+        response = self.client.get(reverse('beer style delete', args=(self.beer_style.id,)))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'beer/beer_style/beer-style-delete.html')
         self.assertContains(response, 'Are you sure you want to delete your beer style?')
@@ -74,7 +74,6 @@ class TestDeleteBeerStyleView(CoreTestCase):
         user_beer_styles_list = self.user1.beerstyle_set.all()
         self.assertEqual(response.status_code, 302)
         self.assertEqual(len(user_beer_styles_list), 1)
-        self.assertRedirects(response, reverse('beer style list'))
 
 
 class TestDeleteBeerStyleDoneView(CoreTestCase):
@@ -107,13 +106,53 @@ class TestBeerStyleDetails(CoreTestCase):
         response = self.client.get(reverse('beer style details', args=(self.beer_style.id,)))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'beer/beer_style/beer-style-details.html')
+        self.assertFalse(response.context['is_owner'])
+        self.assertFalse(response.context['is_liked'])
         self.assertNotContains(response, 'Edit')
         self.assertNotContains(response, 'Delete')
 
-    def test_beerStyle_details_view_with_logIn_user(self):
+    def test_beerStyle_details_view_with_logIn_user_owner(self):
         self.client.force_login(self.user1)
         response = self.client.get(reverse('beer style details', args=(self.beer_style.id,)))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'beer/beer_style/beer-style-details.html')
+        self.assertTrue(response.context['is_owner'])
+        self.assertFalse(response.context['is_liked'])
         self.assertContains(response, 'Edit')
         self.assertContains(response, 'Delete')
+
+    def test_beerStyle_details_view_with_logIn_user_no_owner(self):
+        self.client.force_login(self.user2)
+        response = self.client.get(reverse('beer style details', args=(self.beer_style.id,)))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'beer/beer_style/beer-style-details.html')
+        self.assertFalse(response.context['is_owner'])
+        self.assertTrue(response.context['is_liked'])
+        self.assertNotContains(response, 'Edit')
+        self.assertNotContains(response, 'Delete')
+
+
+class TestBeerStyleLikeView(CoreTestCase):
+    def test_like_beerStyle(self):
+        self.client.force_login(self.user1)
+        new_beer_style = BeerStyle.objects.create(
+            type='type',
+            description='typeDesc',
+            user=self.user2,
+        )
+        response = self.client.post(reverse('beer style like', args=(new_beer_style.id,)))
+        beer_style_like_exist = BeerStyleLike.objects.filter(user=self.user1, beer_style=new_beer_style).exists()
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(beer_style_like_exist)
+
+    def test_dislike_beerStyle(self):
+        self.client.force_login(self.user2)
+        response = self.client.post(reverse('beer style like', args=(self.beer_style.id,)))
+        beer_style_like_exist = BeerStyleLike.objects.filter(user=self.user1, beer_style=self.beer_style).exists()
+        self.assertEqual(response.status_code, 302)
+        self.assertFalse(beer_style_like_exist)
+
+
+class TestBeerStyleCommentView(CoreTestCase):
+    def test_(self):
+        pass
