@@ -1,5 +1,5 @@
 from django.urls import reverse
-from beer_collector.beer.models.beer_style import BeerStyle, BeerStyleLike
+from beer_collector.beer.models.beer_style import BeerStyle, BeerStyleLike, BeerStyleComment
 from beer_collector.core.tests.tests_core import CoreTestCase
 
 
@@ -154,5 +154,20 @@ class TestBeerStyleLikeView(CoreTestCase):
 
 
 class TestBeerStyleCommentView(CoreTestCase):
-    def test_(self):
-        pass
+    def test_add_comment_with_logIn_user(self):
+        self.client.force_login(self.user2)
+        beer_style_comment = self.beer_style_comment1
+        response = self.client.post(reverse('beer style comment', args=(self.user2.id,)))
+        beer_style_comments_count = self.beer_style.beerstylecomment_set.filter(user=self.user2).count()
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(beer_style_comment.comment, 'Comment1')
+        self.assertEqual(beer_style_comments_count, 1)
+
+    def test_add_comment_without_logIn_user(self):
+        BeerStyleComment.objects.create(
+            comment='testComment',
+            beer_style=self.beer_style,
+            user=self.user2
+        )
+        response = self.client.post(reverse('beer style comment', args=(self.user2.id,)))
+        self.assertEqual(response.status_code, 302)

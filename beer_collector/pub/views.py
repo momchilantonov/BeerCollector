@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView, TemplateView, ListView, DetailView
 from folium import Map, Marker
 from beer_collector.core.utilities import get_obj_by_pk

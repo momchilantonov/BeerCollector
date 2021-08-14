@@ -7,6 +7,8 @@ from beer_collector.beer.models.beer import Beer, BeerLike, BeerComment
 from beer_collector.beer.models.beer_style import BeerStyle, BeerStyleLike, BeerStyleComment
 from django.core.files.uploadedfile import SimpleUploadedFile
 
+from beer_collector.pub.models import Pub, PubLike, PubComment
+
 UserModel = get_user_model()
 
 
@@ -169,5 +171,68 @@ class CoreTestCase(TestCase):
                 self.beer_comment1,
                 self.beer_comment2,
                 self.beer_comment3,
+            ]
+        )
+
+        # create beer, comments and likes
+        self.pub = Pub.objects.create(
+            name='testPub',
+            address='testAddress',
+            description='testDesc',
+            website='https://www.test.com/',
+            image=tempfile.NamedTemporaryFile(suffix="_test.jpg").name,
+            longitude=23.101010,
+            latitude=41.010101,
+            user=self.user1,
+        )
+
+        self.pub_like1 = PubLike.objects.create(
+            pub=self.pub,
+            user=self.user2,
+        )
+
+        self.pub_like2 = PubLike.objects.create(
+            pub=self.pub,
+            user=self.user3,
+        )
+
+        self.pub_like3 = PubLike.objects.create(
+            pub=self.pub,
+            user=self.user4,
+        )
+
+        self.pub_likes = []
+        self.pub_likes.extend(
+            [
+                self.pub_like1,
+                self.pub_like2,
+                self.pub_like3,
+            ]
+        )
+
+        self.pub_comment1 = PubComment.objects.create(
+            comment='Comment1',
+            pub=self.pub,
+            user=self.user2,
+        )
+
+        self.pub_comment2 = PubComment.objects.create(
+            comment='Comment2',
+            pub=self.pub,
+            user=self.user3,
+        )
+
+        self.pub_comment3 = PubComment.objects.create(
+            comment='Comment3',
+            pub=self.pub,
+            user=self.user4,
+        )
+
+        self.pub_comments = []
+        self.pub_comments.extend(
+            [
+                self.pub_comment1,
+                self.pub_comment2,
+                self.pub_comment3,
             ]
         )

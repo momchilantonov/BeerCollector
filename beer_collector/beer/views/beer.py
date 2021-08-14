@@ -34,6 +34,11 @@ class EditBeerView(UpdateView):
         beer_id = self.kwargs['pk']
         return reverse_lazy('beer details', kwargs={'pk': beer_id})
 
+    def get_form(self, form_class=None):
+        form = super().get_form()
+        form.fields['type'].queryset = BeerStyle.objects.filter(user=self.request.user)
+        return form
+
 
 class DeleteBeerView(DeleteView):
     model = Beer

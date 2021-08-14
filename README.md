@@ -1,7 +1,6 @@
-<div style="text-align: center">
-<h1>Welcome to BeerCollector!</h1>
-<h4>This is an individual project assignment for the course "Python Web Framework" at SoftUni.</h4>
-</div>
+# Welcome to BeerCollector!
+
+#### This is an individual project assignment for the course "Python Web Framework" at SoftUni
 
 # <p align="center"> ![Abstract](readme_images/abstract.png) <p>
 
@@ -32,7 +31,8 @@ beer, beer brands, and pubs.
         * [2.4.2. Pub Likes](#section_2_4_2)
         * [2.4.3. Pub Comments](#section_2_4_3)
 * [3. Mandatory requirements](#section_3)
-* [4. Additional Developments](#chapter4)
+* [4. Tests Coverage](#section_4)
+* [5. Additional Developments](#chapter5)
 
 ### 1. Introduction <a class="anchor" id="chapter1"></a>
 
@@ -260,7 +260,25 @@ The ***beer label comment*** has the following fields:
   multiple times (with the according adjustments, if such needed)
 - [x] Use a source control system by choice – Github or Gitlab. You must have at least 5 commits + README
 
-### 4. Additional Developments <a class="anchor" id="chapter4"></a>
+### 5. Tests Coverage <a class="anchor" id="chapter5"></a>
+
+#### Account tests
+
+# <p align="center"> ![Account Tests](readme_images/tests_account.png) <p>
+
+#### Beer Style and Beer Label tests
+
+# <p align="center"> ![Beer Tests](readme_images/tests_beer.png) <p>
+
+#### Pub tests
+
+# <p align="center"> ![Pub Tests](readme_images/tests_pub.png) <p>
+
+#### Profile tests
+
+# <p align="center"> ![Profile Tests](readme_images/tests_profile.png) <p>
+
+### 5. Additional Developments <a class="anchor" id="chapter5"></a>
 
 - [x] Responsive web design
 - [x] Class-based views
