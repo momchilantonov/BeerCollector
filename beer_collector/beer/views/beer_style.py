@@ -51,14 +51,14 @@ class BeerStyleListView(ListView):
     model = BeerStyle
     template_name = 'beer/beer_style/beer-style-list.html'
     context_object_name = 'beer_styles'
-    paginate_by = 8
+    paginate_by = 10
 
 
 class BeerStyleUserListView(ListView):
     model = BeerStyle
     template_name = 'beer/beer_style/beer-style-user-list.html'
     context_object_name = 'beer_styles'
-    paginate_by = 8
+    paginate_by = 10
 
     def get_queryset(self):
         q_set = super().get_queryset()

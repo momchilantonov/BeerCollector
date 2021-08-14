@@ -52,7 +52,7 @@ class PubListView(ListView):
     model = Pub
     template_name = 'pub/pub-list.html'
     context_object_name = 'pubs'
-    paginate_by = 8
+    paginate_by = 10
 
 
 class PubUserListView(ListView):
