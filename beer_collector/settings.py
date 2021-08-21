@@ -75,10 +75,10 @@ WSGI_APPLICATION = 'beer_collector.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'BeerCollectorDB',
-        'USER': 'antonov',
-        'PASSWORD': 'antonov8501',
-        'HOST': '127.0.0.1',
+        'NAME': 'd895plsf5a9r21',
+        'USER': 'jflrpptpigpsrm',
+        'PASSWORD': 'f499230df85fdba99e0a120163cce20ece3f7b11d33c195571cfe87855d4b244',
+        'HOST': 'ec2-52-214-178-113.eu-west-1.compute.amazonaws.com',
         'PORT': '5432',
     }
 }
