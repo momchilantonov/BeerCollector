@@ -1,7 +1,0 @@
-* add some background images in details views
-* add some other custom validations
-* create mixin for widget styles or something else
-* create search filter in navbar
-** use a file storage cloud
-** make Deployment
-*** solve the bug on 'back' in Cancel in Details
