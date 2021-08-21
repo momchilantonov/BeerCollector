@@ -6,6 +6,7 @@ coverage==5.5
 Django==3.2.5
 django-cleanup==5.2.0
 folium==0.12.1
+gunicorn==20.1.0
 idna==3.2
 Jinja2==3.0.1
 MarkupSafe==2.0.1
